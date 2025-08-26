@@ -1,0 +1,13 @@
+*{
+    margin: 0;
+    box-sizing: border-box;
+}
+
+body{
+    background-color: #e5e5f7;
+    opacity: 0.9;
+    background-image:  radial-gradient(#000000 1.1500000000000001px, transparent 1.1500000000000001px), radial-gradient(#000000 1.1500000000000001px, #e5e5f7 1.1500000000000001px);
+    background-size: 46px 46px;
+    background-position: 0 0,23px 23px;
+    overflow-x: hidden;
+}
