@@ -1,0 +1,75 @@
+@import url("https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+
+.projects-container {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  color: white;
+}
+
+.projects-container h1 {
+  font-family: "Poppins";
+  font-size: 36px;
+  margin-bottom: 8px;
+}
+
+.projects-card-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0px;
+  max-width: 500px;
+  padding: 12px;
+
+  backdrop-filter: blur(10px);
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 0, 0.1),
+    rgba(255, 255, 255, 0)
+  );
+
+  border-radius: 25px;
+  overflow :hidden;
+  font-family: "Poppins";
+}
+
+.projects-card-container h2 {
+  font-size: 20px;
+}
+
+.projects-card-container h3 {
+  color: gray;
+  font-weight: 400;
+  font-size: 16px;
+}
+
+.projects-card-container p {
+  font-weight: 200;
+  font-size: 12px;
+}
+
+.projects-card-container a{
+  margin-top : 8px;
+  text-decoration: none;
+  color : white;
+  align-self: flex-end;
+}
+
+.project-technologies{
+  margin: 0;
+  margin-top: 12px;
+  padding: 0;
+  display: flex;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  gap : 4px;
+}
+
+.technology-badge{
+  background-color: whitesmoke;
+  font-size: 10px;
+  color: black;
+  list-style-type: none;
+  border-radius: 4px;
+  padding: 2px;
+}

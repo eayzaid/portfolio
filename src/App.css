@@ -4,10 +4,22 @@
 }
 
 body{
-    background-color: #e5e5f7;
-    opacity: 0.9;
-    background-image:  radial-gradient(#000000 1.1500000000000001px, transparent 1.1500000000000001px), radial-gradient(#000000 1.1500000000000001px, #e5e5f7 1.1500000000000001px);
-    background-size: 46px 46px;
-    background-position: 0 0,23px 23px;
-    overflow-x: hidden;
+    background-color: #060010;
+}
+
+.page-container{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center;
+  min-height: 100dvh;
+  gap: 12px;
+  padding: 12px;
+  position: relative;
+}
+
+@media(max-width : 700px){
+  .page-container{
+    flex-direction: column;
+  }
 }
