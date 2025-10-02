@@ -9,16 +9,18 @@
 
 .experiances-container h1 {
   font-family: "Poppins";
-  font-size: 36px;
+  font-size: clamp(28px, 4vw, 42px);
   margin-bottom: 8px;
 }
 
 .experiance-card-container {
   position: relative;
   display: flex;
-  align-items: flex-start;
-  gap: 16px;
-  max-width: 500px;
+  align-items: stretch;
+  gap: 0;
+  width: clamp(350px, 50vw, 800px);
+  min-height: 140px;
+  padding: 0;
 
   backdrop-filter: blur(10px);
   background: linear-gradient(
@@ -28,7 +30,7 @@
   );
 
   border-radius: 25px;
-  overflow :hidden;
+  overflow: hidden;
 
   font-family: "Poppins";
 }
@@ -42,31 +44,50 @@
 }
 
 .experiance-card-image {
-  max-width: 120px;
-  height : 100%;
+  aspect-ratio: 1;
+  width: 140px;
+  height: 100%;
+  object-fit: cover;
+  flex-shrink: 0;
+  border-radius: 0;
+  align-self: stretch;
 }
 
 .experiance-card-info {
-  margin-right: 16px;
-  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  flex: 1;
+  padding: 12px 16px;
+}
+
+.experiance-card-content {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
 }
 
 .experiance-card-info h2 {
-  font-size: 20px;
+  font-size: clamp(16px, 2.5vw, 22px);
+  margin: 0;
+  line-height: 1.2;
 }
 
 .experiance-card-info h3 {
   color: gray;
   font-weight: 400;
-  font-size: 16px;
+  font-size: clamp(13px, 2vw, 18px);
+  margin: 0;
+  line-height: 1.2;
 }
 
 .experiance-card-info h4 {
   font-weight: 200;
-  margin-top: 12px;
-  position: absolute;
-  bottom: 8px;
-  right: 8px;
+  font-size: clamp(11px, 1.5vw, 16px);
+  margin: 0;
+  align-self: flex-end;
+  text-align: right;
+  color: rgba(255, 255, 255, 0.7);
 }
 
 .summary-card {
@@ -87,3 +108,133 @@
   line-height: 1.5;
   color: rgba(255, 255, 255, 0.9);
 }
+
+/* Mobile modal overlay styles */
+.summary-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  z-index: 9998;
+}
+
+.summary-card-mobile {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  max-width: 85vw;
+  width: 100%;
+  z-index: 9999;
+  pointer-events: auto;
+  margin: 0 !important;
+}
+
+.summary-instruction {
+  position: fixed;
+  bottom: 40px;
+  left: 50%;
+  z-index: 9999;
+  pointer-events: none;
+}
+
+.summary-instruction p {
+  margin: 0;
+  padding: 10px 20px;
+  background: transparent;
+  color: white;
+  border-radius: 25px;
+  font-size: 13px;
+  font-family: "Poppins";
+  font-weight: 400;
+  text-align: center;
+  white-space: nowrap;
+  width: max-content;
+  text-shadow: 
+    0 0 10px rgba(255, 255, 255, 0.8),
+    0 0 20px rgba(255, 255, 255, 0.6),
+    0 0 30px rgba(255, 255, 255, 0.4);
+  animation: instructionShake 3s ease-in-out infinite;
+  transform: translateX(-50%);
+}
+
+@keyframes instructionShake {
+  0%, 100% {
+    transform: translateX(-50%) translateY(0);
+  }
+  10% {
+    transform: translateX(calc(-50% - 2px)) translateY(-1px);
+  }
+  20% {
+    transform: translateX(calc(-50% + 2px)) translateY(1px);
+  }
+  30% {
+    transform: translateX(calc(-50% - 2px)) translateY(0px);
+  }
+  40% {
+    transform: translateX(calc(-50% + 2px)) translateY(-1px);
+  }
+  50%, 95% {
+    transform: translateX(-50%) translateY(0);
+  }
+}
+
+/* Inline summary card for mobile */
+.summary-card-inline {
+  width: 100%;
+  max-width: 100%;
+  margin: 0;
+  overflow: hidden;
+  will-change: transform, opacity;
+}
+
+/* Mobile-specific summary card styling */
+@media(max-width: 768px) {
+  .summary-card-inline {
+    padding: 16px;
+    margin: 8px 0;
+  }
+  
+  .summary-card-inline p {
+    font-size: 14px;
+  }
+  
+  .experiance-card-container {
+    cursor: pointer;
+  }
+}
+
+/* Responsive Design */
+@media(max-width: 1024px) {
+  .experiance-card-container {
+    width: clamp(300px, 60vw, 700px);
+    min-height: 120px;
+  }
+  
+  .experiance-card-image {
+    width: 120px;
+  }
+  
+  .experiance-card-info {
+    padding: 10px 14px;
+  }
+}
+
+@media(max-width: 768px) {
+  .experiance-card-container {
+    width: clamp(280px, 85vw, 350px);
+    min-height: 100px;
+  }
+  
+  .experiance-card-image {
+    width: 100px;
+  }
+  
+  .experiance-card-info {
+    padding: 8px 12px;
+  }
+}
+

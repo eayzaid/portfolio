@@ -9,7 +9,7 @@
 
 .projects-container h1 {
   font-family: "Poppins";
-  font-size: 36px;
+  font-size: clamp(28px, 4vw, 42px);
   margin-bottom: 8px;
 }
 
@@ -18,8 +18,9 @@
   flex-direction: column;
   align-items: flex-start;
   gap: 0px;
-  max-width: 500px;
-  padding: 12px;
+  width: clamp(350px, 50vw, 800px);
+  min-height: max-content;
+  padding: 16px;
 
   backdrop-filter: blur(10px);
   background: linear-gradient(
@@ -34,18 +35,18 @@
 }
 
 .projects-card-container h2 {
-  font-size: 20px;
+  font-size: clamp(18px, 2.5vw, 24px);
 }
 
 .projects-card-container h3 {
   color: gray;
   font-weight: 400;
-  font-size: 16px;
+  font-size: clamp(14px, 2vw, 18px);
 }
 
 .projects-card-container p {
   font-weight: 200;
-  font-size: 12px;
+  font-size: clamp(12px, 1.5vw, 15px);
 }
 
 .projects-card-container a{
@@ -67,9 +68,24 @@
 
 .technology-badge{
   background-color: whitesmoke;
-  font-size: 10px;
+  font-size: clamp(9px, 1.2vw, 12px);
   color: black;
   list-style-type: none;
   border-radius: 4px;
-  padding: 2px;
+  padding: 2px 4px;
+}
+
+/* Responsive Design */
+@media(max-width: 1024px) {
+  .projects-card-container {
+    width: clamp(300px, 60vw, 700px);
+    padding: 14px;
+  }
+}
+
+@media(max-width: 768px) {
+  .projects-card-container {
+    width: clamp(280px, 85vw, 350px);
+    padding: 12px;
+  }
 }

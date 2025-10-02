@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import "./Dock.css";
 import { CircleStar, FolderGit, PencilRuler } from "lucide-react";
-import { Link } from "react-router-dom";
 import { motion, AnimatePresence } from "motion/react";
 
 const DynamicBadge = ({ text, mousePosition }) => {
@@ -40,10 +39,21 @@ const DynamicBadge = ({ text, mousePosition }) => {
   );
 };
 const dockList = [
-  { Icon: FolderGit, textName: "Projects", redirect: "/projects" },
-  { Icon: CircleStar, textName: "Experiances", redirect: "/experiances" },
-  { Icon: PencilRuler, textName: "Skills", redirect: "/skills" },
+  { Icon: CircleStar, textName: "Experiences", sectionId: "experiences" },
+  { Icon: FolderGit, textName: "Projects", sectionId: "projects" },
+  { Icon: PencilRuler, textName: "Skills", sectionId: "skills" },
 ];
+
+const scrollToSection = (sectionId) => {
+  const element = document.querySelector(`.section-${sectionId}`);
+  if (element) {
+    element.scrollIntoView({ 
+      behavior: 'smooth', 
+      block: 'center',
+      inline: 'nearest'
+    });
+  }
+};
 
 export default function Dock() {
   const [text, setText] = useState(null);
@@ -75,28 +85,29 @@ export default function Dock() {
           delay: 0.2
         }}
       >
-        {dockList.map(({ Icon, textName, redirect }, idx) => (
-          <Link key={idx} to={redirect}>
-            <motion.li
-              onMouseOver={() => setText(textName)}
-              onMouseLeave={() => setText(null)}
-              whileHover={{ 
-                scale: 1.05,
-              }}
-              whileTap={{ 
-                scale: 0.95,
-                y: 2,
-              }}
-              transition={{
-                type: "spring",
-                stiffness: 400,
-                damping: 17,
-                mass: 0.8,
-              }}
-            >
-              <Icon size={40} strokeWidth={0.9} />
-            </motion.li>
-          </Link>
+        {dockList.map(({ Icon, textName, sectionId }, idx) => (
+          <motion.li
+            key={idx}
+            onMouseOver={() => setText(textName)}
+            onMouseLeave={() => setText(null)}
+            onClick={() => scrollToSection(sectionId)}
+            whileHover={{ 
+              scale: 1.05,
+            }}
+            whileTap={{ 
+              scale: 0.95,
+              y: 2,
+            }}
+            transition={{
+              type: "spring",
+              stiffness: 400,
+              damping: 17,
+              mass: 0.8,
+            }}
+            style={{ cursor: 'pointer' }}
+          >
+            <Icon size={40} strokeWidth={0.9} />
+          </motion.li>
         ))}
       </motion.ul>
     </footer>

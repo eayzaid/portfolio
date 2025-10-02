@@ -2,68 +2,46 @@ import ProfileCard from "./ProfileCard/ProfileCard";
 import Experiances from "./Experiances/Experiances";
 import Projects from "./Projects/Projects";
 import Skills from "./Skills/Skills";
+import Navbar from "./Navbar/Navbar";
 
 import "./App.css";
-import Dock from "./Dock/Dock";
-import { motion, AnimatePresence } from "motion/react";
-import { Route, Routes, useLocation, Navigate } from "react-router-dom";
+import { motion, useInView } from "motion/react";
 import Aurora from "./Aurora/Aurora";
-import { useState, useEffect, useRef } from "react";
+import { useRef } from "react";
+
+// ScrollSection component with intersection observer animations
+const ScrollSection = ({ children, className = "", delay = 0 }) => {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { 
+    once: true, // Only animate once when first entering viewport
+    margin: "0px 0px -100px 0px",
+    amount: 0.1
+  });
+
+  return (
+    <motion.section
+      ref={ref}
+      className={`scroll-section ${className}`}
+      initial={{ 
+        opacity: 0, 
+        scale: 0.95
+      }}
+      animate={isInView ? { 
+        opacity: 1, 
+        scale: 1,
+        transition: {
+          duration: 0.8,
+          delay: delay,
+          ease: [0.4, 0, 0.2, 1]
+        }
+      } : undefined}
+    >
+      {children}
+    </motion.section>
+  );
+};
 
 function App() {
-  const location = useLocation();
-  
-  // Define the order of components
-  const componentOrder = [
-    "/experiances", 
-    "/projects",
-    "/skills"
-  ];
-  
-  // Track previous index with ref
-  const previousIndexRef = useRef(0);
-  const currentIndex = componentOrder.indexOf(location.pathname);
-  
-  // Determine animation direction based on indices
-  const direction = currentIndex > previousIndexRef.current ? 1 : -1;
-  
-  // Update previous index after calculating direction
-  useEffect(() => {
-    const newIndex = componentOrder.indexOf(location.pathname);
-    if (newIndex !== -1) {
-      previousIndexRef.current = newIndex;
-    }
-  }, [location.pathname]);
-
-  const pageVariants = {
-    initial: (dir) => ({
-      y: dir > 0 ? "30vh" : "-30vh",
-      opacity: 0,
-      scale: 0.96,
-    }),
-    in: {
-      y: 0,
-      opacity: 1,
-      scale: 1,
-    },
-    out: (dir) => ({
-      y: dir > 0 ? "-20vh" : "20vh",
-      opacity: 0,
-      scale: 0.97,
-    })
-  };
-
-  const pageTransition = {
-    type: "spring",
-    stiffness: 200,
-    damping: 35,
-    mass: 1.2,
-    opacity: {
-      duration: 0.5,
-      ease: "easeInOut",
-    },
-  };
-
   return (
     <>
       <Aurora
@@ -72,68 +50,42 @@ function App() {
         amplitude={1.0}
         speed={0.5}
       />
-      <motion.main className="page-container">
-        {/* Persistent Profile Card on the left */}
-        <div className="profile-sidebar">
+      
+      <Navbar />
+      
+      <div className="scroll-container">
+        <motion.div 
+          initial={{ 
+            opacity: 0, 
+            scale: 0.95
+          }}
+          animate={{ 
+            opacity: 1, 
+            scale: 1
+          }}
+          transition={{ 
+            duration: 0.8, 
+            ease: [0.4, 0, 0.2, 1]
+          }}
+        >
           <ProfileCard />
-        </div>
-        
-        {/* Main content area with page transitions */}
-        <div className="content-area">
-          <AnimatePresence mode="wait" custom={direction}>
-            <Routes location={location} key={location.pathname}>
-              <Route 
-                path="/experiances" 
-                element={
-                  <motion.div
-                    custom={direction}
-                    initial="initial"
-                    animate="in"
-                    exit="out"
-                    variants={pageVariants}
-                    transition={pageTransition}
-                  >
-                    <Experiances />
-                  </motion.div>
-                } 
-              />
-              <Route 
-                path="/projects" 
-                element={
-                  <motion.div
-                    custom={direction}
-                    initial="initial"
-                    animate="in"
-                    exit="out"
-                    variants={pageVariants}
-                    transition={pageTransition}
-                  >
-                    <Projects />
-                  </motion.div>
-                } 
-              />
-              <Route 
-                path="/skills" 
-                element={
-                  <motion.div
-                    custom={direction}
-                    initial="initial"
-                    animate="in"
-                    exit="out"
-                    variants={pageVariants}
-                    transition={pageTransition}
-                  >
-                    <Skills />
-                  </motion.div>
-                } 
-              />
-              {/* Redirect root to experiences */}
-              <Route path="/" element={<Navigate to="/experiances" replace />} />
-            </Routes>
-          </AnimatePresence>
-        </div>
-      </motion.main>
-      <Dock />
+        </motion.div>
+
+        {/* Main content with scroll sections */}
+        <main className="main-content">
+          <ScrollSection className="section-experiences" delay={0.2}>
+            <Experiances />
+          </ScrollSection>
+
+          <ScrollSection className="section-projects" delay={0.1}>
+            <Projects />
+          </ScrollSection>
+
+          <ScrollSection className="section-skills" delay={0.3}>
+            <Skills />
+          </ScrollSection>
+        </main>
+      </div>
     </>
   );
 }
