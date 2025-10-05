@@ -245,7 +245,7 @@ export default function Experiances() {
 
   return (
     <article ref={experiancesRef} className="experiances-container" style={{ position: 'relative' }}>
-      <h1>Experiances</h1>
+      <h1>Experiences</h1>
       {experienceData.map((element, index) => (
         <ExperianceCard 
           key={index} 

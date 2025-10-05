@@ -19,8 +19,8 @@
   width: 90%;
   padding: clamp(12px, 2vw, 18px) clamp(20px, 4vw, 40px);
   background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
   border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: 100px;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
@@ -68,7 +68,6 @@
   color: white;
   text-decoration: none;
   transition: all 0.3s ease;
-  backdrop-filter: blur(10px);
 }
 
 .navbar-link:hover {
@@ -101,7 +100,6 @@
   font-weight: 500;
   cursor: pointer;
   transition: all 0.3s ease;
-  backdrop-filter: blur(10px);
   white-space: nowrap;
 }
 

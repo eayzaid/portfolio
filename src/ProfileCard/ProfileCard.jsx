@@ -1,7 +1,6 @@
 import "./ProfileCard.css";
 import ProfilePicture from "../assets/ProfilePicture.jpg";
 import { motion } from "motion/react";
-import { animate } from "motion";
 import { useState } from "react";
 
 export default function ProfileCard() {
@@ -54,7 +53,7 @@ export default function ProfileCard() {
               }}
             />
           </motion.div>
-        </div>
+        </div>  
 
         <h1>
           Hello , I am <strong>Ayman Zaidane</strong>

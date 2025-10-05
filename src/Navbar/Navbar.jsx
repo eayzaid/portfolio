@@ -3,16 +3,7 @@ import "./Navbar.css";
 import { motion } from "motion/react";
 
 export default function Navbar() {
-  const handleDownloadResume = () => {
-    // Replace with your actual resume file path
-    const resumeUrl = "/resume.pdf";
-    const link = document.createElement("a");
-    link.href = resumeUrl;
-    link.download = "Zaidane_Ayman_Resume.pdf";
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-  };
+
 
   return (
     <motion.nav 
@@ -30,7 +21,7 @@ export default function Navbar() {
         {/* Right side - Links */}
         <div className="navbar-right">
           <a 
-            href="mailto:your.email@example.com" 
+            href="mailto:aymanzaidanepro@gmail.com" 
             className="navbar-link"
             aria-label="Email"
           >
@@ -38,7 +29,7 @@ export default function Navbar() {
           </a>
 
           <a 
-            href="https://linkedin.com/in/yourprofile" 
+            href="https://linkedin.com/in/zaidane-ayman" 
             target="_blank" 
             rel="noopener noreferrer"
             className="navbar-link"
@@ -47,14 +38,17 @@ export default function Navbar() {
             <Linkedin className="navbar-icon" />
           </a>
 
-          <button 
-            onClick={handleDownloadResume}
+          <a 
+            href="https://mypdfresumelink.creatpad.com"
             className="navbar-resume-btn"
             aria-label="Download Resume"
+            style={{
+              textDecoration : "none"
+            }}
           >
             <Download className="navbar-icon" />
             <span className="navbar-resume-text">Resume</span>
-          </button>
+          </a>
         </div>
       </div>
     </motion.nav>

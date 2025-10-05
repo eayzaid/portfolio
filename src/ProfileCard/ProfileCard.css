@@ -13,19 +13,57 @@
   border-radius: 16px;
 
   background: linear-gradient(
-    rgba(255, 255, 255, 0),
-    rgba(255, 255, 255, 0.1)
+    135deg,
+    rgba(255, 255, 255, 0.15) 0%,
+    rgba(255, 255, 255, 0.08) 50%,
+    rgba(255, 255, 255, 0.05) 100%
   );
-  backdrop-filter: blur(20px);
+  backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(3px);
+  
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  
+  box-shadow: 
+    0 8px 32px rgba(0, 0, 0, 0.2),
+    0 2px 8px rgba(0, 0, 0, 0.1);
+  
   color: white;
   
   transition: all 300ms ease;
   cursor: pointer;
   user-select: none;
+  position: relative;
+  overflow: hidden;
+  will-change: transform, opacity;
+  transform: translateZ(0);
 }
 
-.profile-card:hover{
-    box-shadow: 0 0 20px gray;
+.profile-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.5),
+    transparent
+  );
+}
+
+.profile-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 
+    0 12px 40px rgba(0, 0, 0, 0.25),
+    0 4px 12px rgba(0, 0, 0, 0.15);
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.18) 0%,
+    rgba(255, 255, 255, 0.1) 50%,
+    rgba(255, 255, 255, 0.08) 100%
+  );
 }
 
 .profile-card h1 {
@@ -48,7 +86,7 @@
 
 @layer components {
   .state {
-    color: green;
+    color: #8BE78C;
     font-family: "Poppins";
     font-size: clamp(12px, 1.5vw, 16px);
     align-self: flex-end;
@@ -81,6 +119,7 @@
   width: 100%;
   height: 100%;
   transform-style: preserve-3d;
+  filter: none;
 }
 
 .picture {
@@ -90,6 +129,8 @@
   object-fit: cover;
   object-position: top;
   border-radius: 100%;
+  box-shadow: none;
+  filter: none;
 }
 
 .picture-front,
@@ -99,6 +140,8 @@
   left: 0;
   width: 100%;
   height: 100%;
+    box-shadow: none;
+  filter: none;
 }
 
 .picture-back {
