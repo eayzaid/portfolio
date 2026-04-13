@@ -92,7 +92,8 @@
   margin-bottom: 0.85rem;
 }
 
-.hero-name span {
+.hero-name .line {
+  min-height: 0.92em;
   font-family: "Manrope", "Segoe UI", sans-serif;
   font-weight: 800;
   text-transform: uppercase;
@@ -100,6 +101,23 @@
   font-size: clamp(2.8rem, 11vw, 7.1rem);
   color: var(--forest-deep);
   text-wrap: balance;
+}
+
+.hero-name .typing-caret::after {
+  content: "";
+  display: inline-block;
+  width: 0.09em;
+  height: 0.82em;
+  margin-left: 0.08em;
+  background: var(--forest-deep);
+  vertical-align: baseline;
+  animation: caret-blink 1s steps(1, end) infinite;
+}
+
+@keyframes caret-blink {
+  50% {
+    opacity: 0;
+  }
 }
 
 .hero-title {
@@ -157,23 +175,201 @@
   background: rgba(255, 255, 255, 0.85);
 }
 
+.contact-orbit {
+  position: fixed;
+  right: clamp(0.8rem, 2.2vw, 1.45rem);
+  bottom: clamp(0.8rem, 2.2vw, 1.45rem);
+  z-index: 8;
+  width: 3.7rem;
+  height: 3.7rem;
+}
+
+.contact-orbit-trigger,
+.contact-node {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 999px;
+  border: 1px solid rgba(17, 61, 39, 0.34);
+  background: rgba(247, 252, 248, 0.92);
+  color: #173d2d;
+  text-decoration: none;
+  box-shadow:
+    0 8px 22px rgba(13, 51, 33, 0.16),
+    0 2px 8px rgba(13, 51, 33, 0.12);
+}
+
+.contact-orbit-trigger {
+  position: relative;
+  z-index: 2;
+  width: 3.7rem;
+  height: 3.7rem;
+  overflow: visible;
+  cursor: pointer;
+  transition: transform 0.24s ease, background-color 0.24s ease, border-color 0.24s ease;
+}
+
+.contact-orbit-trigger::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  border: 1px solid rgba(255, 255, 255, 0.85);
+  box-shadow: 0 0 24px rgba(255, 255, 255, 0.78);
+  opacity: 0;
+  transform: scale(1);
+  pointer-events: none;
+}
+
+.contact-orbit:not(.is-open) .contact-orbit-trigger::after {
+  animation: contact-orbit-ring 1.9s ease-out infinite;
+}
+
+@keyframes contact-orbit-ring {
+  0% {
+    opacity: 0.68;
+    transform: scale(1);
+  }
+
+  80% {
+    opacity: 0;
+    transform: scale(1.78);
+  }
+
+  100% {
+    opacity: 0;
+    transform: scale(1.78);
+  }
+}
+
+.contact-orbit-trigger:hover {
+  transform: translateY(-1px);
+  border-color: rgba(17, 61, 39, 0.56);
+}
+
+.contact-orbit.is-open .contact-orbit-trigger {
+  background: rgba(237, 247, 240, 0.98);
+  border-color: rgba(18, 68, 45, 0.62);
+}
+
+.contact-orbit-dot {
+  display: inline-block;
+  width: 1rem;
+  height: 1rem;
+  border-radius: 999px;
+  background: #24563f;
+  box-shadow: 0 0 0 9px rgba(36, 86, 63, 0.12);
+}
+
+.contact-orbit-close-icon-wrap {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.contact-orbit-close-icon {
+  width: 1.2rem;
+  height: 1.2rem;
+  color: #24563f;
+}
+
+.contact-orbit-nodes {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.contact-node {
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  width: 3.48rem;
+  height: 3.48rem;
+  pointer-events: auto;
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+.contact-node svg {
+  width: 1.24rem;
+  height: 1.24rem;
+}
+
+.contact-node::after {
+  content: attr(data-label);
+  position: absolute;
+  right: calc(100% + 0.5rem);
+  top: 50%;
+  transform: translateY(-50%) translateX(-0.2rem);
+  padding: 0.22rem 0.55rem;
+  border-radius: 999px;
+  background: rgba(16, 46, 33, 0.9);
+  color: #eef6f0;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.18s ease, transform 0.18s ease;
+  white-space: nowrap;
+}
+
+.contact-node:is(:hover, :focus-visible)::after {
+  opacity: 1;
+  transform: translateY(-50%) translateX(0);
+}
+
+
+
+.contact-node:is(:hover, :focus-visible) {
+  border-color: rgba(21, 74, 49, 0.7);
+  background: rgba(244, 251, 246, 1);
+}
+
 @media (max-width: 620px) {
   .hero-name {
     line-height: 0.82;
     margin-bottom: 0.95rem;
   }
 
-  .hero-name span {
+  .hero-name .line {
     font-size: clamp(3.35rem, 18vw, 5.2rem);
   }
 
   .hero-title {
     font-size: clamp(1.35rem, 6vw, 2rem);
   }
+
+  .contact-orbit {
+    right: 0.65rem;
+    bottom: 0.65rem;
+    width: 3.2rem;
+    height: 3.2rem;
+  }
+
+  .contact-orbit-trigger {
+    width: 3.2rem;
+    height: 3.2rem;
+  }
+
+  .contact-node {
+    width: 3rem;
+    height: 3rem;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .online-dot {
+  .online-dot,
+  .hero-name .typing-caret::after {
     animation: none;
+  }
+
+  .contact-orbit-trigger::after {
+    animation: none;
+  }
+
+  .contact-orbit-trigger,
+  .contact-node {
+    transition: none;
   }
 }
