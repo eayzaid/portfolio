@@ -1,0 +1,119 @@
+{
+  "hero": {
+    "availability": "Looking for a 2026 summer internship",
+    "name": {
+      "first": "Zaidane",
+      "last": "Ayman"
+    },
+    "title": "Software Engineering Student",
+    "summary": "Building AI, web, and mobile application solutions with a focus on practical impact, clean architecture, and reliable delivery.",
+    "contacts": [
+      {
+        "type": "email",
+        "label": "Email",
+        "value": "aymanzaidanepro@gmail.com",
+        "href": "mailto:aymanzaidanepro@gmail.com"
+      },
+      {
+        "type": "phone",
+        "label": "Phone",
+        "value": "+212 654 124 518",
+        "href": "tel:+212654124518"
+      },
+      {
+        "type": "github",
+        "label": "GitHub",
+        "value": "eayzaid",
+        "href": "https://github.com/Eayzaid",
+        "external": true
+      },
+      {
+        "type": "linkedin",
+        "label": "LinkedIn",
+        "value": "Zaidane Ayman",
+        "href": "https://linkedin.com/in/zaidane-ayman",
+        "external": true
+      }
+    ]
+  },
+  "education": [
+    {
+      "institution": "National School of Arts and Crafts - ENSAM Meknes",
+      "program": "Engineering Cycle in Computer Science: Software Engineering & Intelligent Systems",
+      "location": "Meknes, Morocco",
+      "period": "Expected 2027"
+    }
+  ],
+  "experience": [
+    {
+      "company": "OCP Group",
+      "role": "Software Engineering Intern",
+      "location": "Morocco",
+      "period": "Summer 2024",
+      "achievements": [
+        "Engineered and deployed OCPInterns, an end-to-end internship management platform that unified applications, evaluations, and onboarding through secure JWT-protected REST APIs.",
+        "Implemented analytics dashboards, automated PDF generation, and QR-code verification to improve visibility and reduce operational overhead."
+      ]
+    }
+  ],
+  "projects": [
+    {
+      "title": "eGrading - Digital Examination Platform",
+      "stack": "Java, Spring Boot, React, PostgreSQL, JWT, Flyway, Docker",
+      "description": "Built a complete digital evaluation workflow covering exam creation, auto-grading, and performance dashboards using Agile practices, secure authentication, and database versioning."
+    },
+    {
+      "title": "Facial Emotion Recognition via Deep Learning",
+      "stack": "Python, TensorFlow, CNN, Transfer Learning, FER-2013",
+      "description": "Developed CNN-based models to classify 7 emotional states with transfer learning, including data augmentation and weighted F1 evaluation across the full ML pipeline."
+    },
+    {
+      "title": "Collaborative Task Manager - Mobile App",
+      "stack": "Flutter, Dart, REST API, Real-Time Sync",
+      "description": "Created a cross-platform mobile app with real-time task synchronization through REST APIs and a modular architecture designed for scale."
+    }
+  ],
+  "leadership": [
+    {
+      "title": "Competitive Programming Pole Leader",
+      "organization": "Computer Science Club - ENSAM Meknes",
+      "period": "2023 - Present",
+      "details": "Mentored 30+ students in algorithms and competitive programming, driving more than 200% growth in active participation through structured weekly coaching."
+    },
+    {
+      "title": "Social Media Specialist & IT Lead",
+      "organization": "Caravane El Hayat - Meknes",
+      "period": "2023 - Present",
+      "details": "Built the internal coordination platform WASSAL, led digital communication for a 15-member team, and supported campaigns that raised over 200,000 MAD for charitable causes."
+    },
+    {
+      "title": "National Algorithmic Competition - Arts and Crafts",
+      "organization": "Contestant",
+      "period": "2024",
+      "details": "Ranked 1st at ENSAM and 15th nationally."
+    }
+  ],
+  "certifications": [
+    "Oracle Cloud Infrastructure Foundations Associate (Oracle)",
+    "MongoDB Developer Path - Node.js (MongoDB)"
+  ],
+  "skills": [
+    {
+      "category": "Languages",
+      "items": ["Java", "Python", "JavaScript", "C++", "Dart", "Bash"]
+    },
+    {
+      "category": "Databases",
+      "items": ["MySQL", "OracleDB", "PostgreSQL", "MongoDB", "Redis"]
+    },
+    {
+      "category": "Frameworks",
+      "items": ["Spring Boot", "React", "Flask", "Flutter", "TailwindCSS"]
+    },
+    {
+      "category": "Tools",
+      "items": ["Git", "Docker", "Vercel", "Netlify", "Figma", "Linux"]
+    }
+  ],
+  "languages": ["Arabic (Native)", "English (Fluent)", "French (Fluent)"]
+}
