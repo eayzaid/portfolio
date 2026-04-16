@@ -40,11 +40,11 @@
 }
 
 .availability-badge {
-  display: inline-flex;
+  display: flex;
   align-items: center;
   gap: 0.55rem;
   width: fit-content;
-  margin-bottom: 0.52rem;
+  margin-bottom: 0.44rem;
   padding: 0.32rem 0.78rem;
   border-radius: 999px;
   border: 1px solid rgba(37, 136, 80, 0.35);
@@ -53,6 +53,41 @@
   font-size: 0.95rem;
   font-weight: 700;
   line-height: 1.2;
+}
+
+.school-badge {
+  display: flex;
+  align-items: center;
+  gap: 0.46rem;
+  width: fit-content;
+  margin-bottom: 0.85rem;
+  padding: 0.36rem 0.82rem;
+  border-radius: 999px;
+  border: 1px solid rgba(34, 108, 219, 0.36);
+  background: rgba(233, 242, 255, 0.86);
+  color: #154da3;
+  text-decoration: none;
+  font-size: 0.9rem;
+  font-weight: 700;
+  line-height: 1.2;
+  transition: transform 0.2s ease, border-color 0.2s ease, background-color 0.2s ease;
+}
+
+.school-badge svg {
+  width: 0.94rem;
+  height: 0.94rem;
+  flex-shrink: 0;
+}
+
+.school-badge:hover {
+  transform: translateY(-1px);
+  border-color: rgba(22, 83, 174, 0.62);
+  background: rgba(223, 236, 255, 0.96);
+}
+
+.school-badge:focus-visible {
+  outline: 2px solid rgba(21, 77, 163, 0.35);
+  outline-offset: 2px;
 }
 
 .online-dot {

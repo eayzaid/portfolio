@@ -8,20 +8,6 @@ function Portfolio() {
       <HeroSection hero={portfolioData.hero} />
 
       <div className="portfolio-shell">
-        <SectionCard id="education" title="Education" delay="150ms">
-          {portfolioData.education.map((item) => (
-            <div key={item.institution} className="entry">
-              <div>
-                <h3>{item.institution}</h3>
-                <p>{item.program}</p>
-              </div>
-              <p className="meta">
-                {item.location} | {item.period}
-              </p>
-            </div>
-          ))}
-        </SectionCard>
-
         <SectionCard id="experience" title="Experience" delay="210ms">
           {portfolioData.experience.map((item) => (
             <article key={`${item.company}-${item.role}`} className="entry">

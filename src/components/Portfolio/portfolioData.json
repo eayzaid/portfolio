@@ -1,6 +1,10 @@
 {
   "hero": {
     "availability": "Looking for a 2026 summer internship",
+    "schoolBadge": {
+      "label": "Studying at ENSAM Meknes",
+      "href": "https://www.ensam-umi.ac.ma/formations/genie-industriel-intelligence-artificielle-et-data-science-2/"
+    },
     "name": {
       "first": "Zaidane",
       "last": "Ayman"

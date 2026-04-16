@@ -1,4 +1,4 @@
-import { Github, Linkedin, Mail, Phone, Globe, X } from "lucide-react";
+import { Github, Linkedin, Mail, Phone, Globe, School, X } from "lucide-react";
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
 import Grainient from "../../Grainient";
@@ -99,6 +99,13 @@ function HeroSection({ hero }) {
           <span className="online-dot" aria-hidden="true" />
           {hero.availability}
         </p>
+
+        {hero.schoolBadge && (
+          <a className="school-badge" href={hero.schoolBadge.href} target="_blank" rel="noopener noreferrer" aria-label={hero.schoolBadge.label}>
+            <School aria-hidden="true" />
+            <span>{hero.schoolBadge.label}</span>
+          </a>
+        )}
 
         <div className="hero-name" aria-label={`${hero.name.first} ${hero.name.last}`}>
           <span className={`line ${activeLine === "first" ? "typing-caret" : ""}`}>{typedFirst}</span>
