@@ -1,5 +1,6 @@
 import "./ProfileCard.css";
 import ProfilePicture from "../assets/ProfilePicture.jpg";
+import ProProfilePicture from "../assets/MyProImage.jpeg";
 import { motion } from "motion/react";
 import { useState } from "react";
 
@@ -46,7 +47,7 @@ export default function ProfileCard() {
             {/* Back side */}
             <img 
               className="picture picture-back" 
-              src="/MyProImage.jpeg"
+              src={ProProfilePicture}
               style={{
                 backfaceVisibility: "hidden",
                 transform: "rotateY(180deg)",
