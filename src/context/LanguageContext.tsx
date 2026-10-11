@@ -11,7 +11,7 @@ import type {
   LeadershipItem,
   CertificationItem,
   LanguageItem,
-} from '../data/resumeData';
+} from '../types/resume';
 
 export type Language = 'en' | 'fr';
 
