@@ -1,11 +1,13 @@
 import React from 'react';
-import { resumeData } from '../data/resumeData';
+import { useLanguage } from '../context/LanguageContext';
 
 export const SkillsSection: React.FC = () => {
+  const { resumeData, t } = useLanguage();
+
   return (
     <div>
       <div className="fp-label" style={{ marginBottom: '14px' }}>
-        <span>Technical Skills &amp; Architecture Matrix</span>
+        <span>{t('sections.skillsTitle', 'Technical Skills & Architecture Matrix')}</span>
       </div>
 
       <div

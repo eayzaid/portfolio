@@ -1,14 +1,16 @@
 import React from 'react';
 import { TrueGitHubLogo } from './TrueLogos';
-import { resumeData } from '../data/resumeData';
+import { useLanguage } from '../context/LanguageContext';
 import { formatEmphasizedText } from '../utils/formatText';
 
 export const ExperienceSection: React.FC = () => {
+  const { resumeData, t } = useLanguage();
+
   return (
     <div style={{ display: 'grid', gap: '32px' }}>
       <div>
         <div className="fp-label" style={{ marginBottom: '14px' }}>
-          <span>Professional Experience</span>
+          <span>{t('sections.experienceTitle', 'Professional Experience')}</span>
         </div>
         <div style={{ display: 'grid', gap: '20px' }}>
           {resumeData.experience.map((exp, idx) => (
@@ -84,7 +86,7 @@ export const ExperienceSection: React.FC = () => {
                     title={`Visit ${exp.company} repository on GitHub`}
                   >
                     <TrueGitHubLogo size={14} />
-                    <span>Visit GitHub</span>
+                    <span>{t('sections.viewCode', 'Visit GitHub')}</span>
                   </a>
                 )}
               </div>

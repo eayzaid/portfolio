@@ -1,5 +1,6 @@
 import { useState, useEffect, lazy, Suspense } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { LanguageProvider } from './context/LanguageContext';
 import { HeaderNav } from './components/HeaderNav';
 import { TickerBar } from './components/TickerBar';
 import { ScrollToTopOnNav } from './components/ScrollToTopOnNav';
@@ -68,41 +69,43 @@ export function App() {
   };
 
   return (
-    <BrowserRouter basename={import.meta.env.BASE_URL}>
-      <ScrollToTopOnNav />
-      <div className="fp-shell">
-        {/* Persistent Top Navigation Bar + Always Adhered Status Ticker */}
-        <div style={{ width: '100%' }}>
-          <HeaderNav
-            theme={theme}
-            onToggleTheme={handleToggleTheme}
-          />
-          <TickerBar />
-        </div>
-
-        {/* Dynamic Route Pages */}
-        <Suspense fallback={<RouteLoadingFallback />}>
-          <Routes>
-            <Route path="/" element={<PortfolioPage />} />
-            <Route path="/blog/*" element={<BlogPage />} />
-            <Route path="*" element={<NotFoundPage />} />
-          </Routes>
-        </Suspense>
-
-        {/* Persistent Footer */}
-        <Footer />
-
-        {/* Global Interactive Resume Modal (Lazy Loaded on Demand) */}
-        {isResumeModalOpen && (
-          <Suspense fallback={null}>
-            <ResumeModal
-              isOpen={isResumeModalOpen}
-              onClose={() => setIsResumeModalOpen(false)}
+    <LanguageProvider>
+      <BrowserRouter basename={import.meta.env.BASE_URL}>
+        <ScrollToTopOnNav />
+        <div className="fp-shell">
+          {/* Persistent Top Navigation Bar + Always Adhered Status Ticker */}
+          <div style={{ width: '100%' }}>
+            <HeaderNav
+              theme={theme}
+              onToggleTheme={handleToggleTheme}
             />
+            <TickerBar />
+          </div>
+
+          {/* Dynamic Route Pages */}
+          <Suspense fallback={<RouteLoadingFallback />}>
+            <Routes>
+              <Route path="/" element={<PortfolioPage />} />
+              <Route path="/blog/*" element={<BlogPage />} />
+              <Route path="*" element={<NotFoundPage />} />
+            </Routes>
           </Suspense>
-        )}
-      </div>
-    </BrowserRouter>
+
+          {/* Persistent Footer */}
+          <Footer />
+
+          {/* Global Interactive Resume Modal (Lazy Loaded on Demand) */}
+          {isResumeModalOpen && (
+            <Suspense fallback={null}>
+              <ResumeModal
+                isOpen={isResumeModalOpen}
+                onClose={() => setIsResumeModalOpen(false)}
+              />
+            </Suspense>
+          )}
+        </div>
+      </BrowserRouter>
+    </LanguageProvider>
   );
 }
 

@@ -2,6 +2,7 @@ import { useState, lazy, Suspense } from 'react';
 import { RetroRadio, type RadioStationId } from '../components/RetroRadio';
 import { HeroSection } from '../components/HeroSection';
 import { PixelIcon } from '../components/PixelIcon';
+import { useLanguage } from '../context/LanguageContext';
 
 const ExperienceSection = lazy(() => import('../components/ExperienceSection').then((m) => ({ default: m.ExperienceSection })));
 const EducationSection = lazy(() => import('../components/EducationSection').then((m) => ({ default: m.EducationSection })));
@@ -10,6 +11,7 @@ const SkillsSection = lazy(() => import('../components/SkillsSection').then((m) 
 const HonorsCertificationsSection = lazy(() => import('../components/HonorsCertificationsSection').then((m) => ({ default: m.HonorsCertificationsSection })));
 
 function StationFallback() {
+  const { t } = useLanguage();
   return (
     <div
       style={{
@@ -32,7 +34,7 @@ function StationFallback() {
           marginBottom: '8px',
         }}
       >
-        TUNING STATION FREQUENCY...
+        {t('radio.tuningStation', 'TUNING STATION FREQUENCY...')}
       </div>
       <div style={{ fontSize: '11px', color: 'var(--fp-muted)' }}>
         [ ░▒▓▒░▒▓▒░ ]
@@ -44,6 +46,7 @@ function StationFallback() {
 type SectionTab = RadioStationId;
 
 export function PortfolioPage() {
+  const { t } = useLanguage();
   const [activeTab, setActiveTab] = useState<SectionTab>('about');
 
   const handleStationChange = (stationId: SectionTab) => {
@@ -116,7 +119,7 @@ export function PortfolioPage() {
             aria-label="Scroll all the way to top of page"
           >
             <PixelIcon name="arrowUp" size={16} />
-            <span>Scroll To Top</span>
+            <span>{t('radio.scrollToTop', 'Scroll To Top')}</span>
             <span style={{ fontSize: '11px', opacity: 0.85 }}>[ ▲ ]</span>
           </button>
         </div>

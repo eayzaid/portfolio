@@ -1,15 +1,16 @@
 import React from 'react';
 import { PixelIcon } from './PixelIcon';
-import { resumeData } from '../data/resumeData';
+import { useLanguage } from '../context/LanguageContext';
 
 export const EducationSection: React.FC = () => {
+  const { resumeData, t } = useLanguage();
   const centraleNantes = resumeData.education[0];
   const ensamMeknes = resumeData.education[1];
 
   return (
     <div>
       <div className="fp-label" style={{ marginBottom: '20px' }}>
-        <span>Academic Timeline &amp; Engineering Degrees</span>
+        <span>{t('sections.educationTitle', 'Academic Timeline & Engineering Degrees')}</span>
       </div>
 
       {/* Vertical 8-bit Timeline Container */}

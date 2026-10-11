@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { useLanguage } from '../context/LanguageContext';
 
 export type RadioStationId =
   | 'about'
@@ -18,62 +19,6 @@ export interface RadioStation {
   badge: string;
 }
 
-const RADIO_STATIONS: RadioStation[] = [
-  {
-    id: 'about',
-    name: 'About Me',
-    preset: 1,
-    freq: '88.5',
-    mhz: 88.5,
-    tagline: 'Bio, Vision & Specs',
-    badge: 'BIO',
-  },
-  {
-    id: 'experience',
-    name: 'Experience',
-    preset: 2,
-    freq: '92.3',
-    mhz: 92.3,
-    tagline: 'NT SHIELD & OCP Group',
-    badge: 'WORK',
-  },
-  {
-    id: 'education',
-    name: 'Education',
-    preset: 3,
-    freq: '96.5',
-    mhz: 96.5,
-    tagline: 'Centrale Nantes & ENSAM',
-    badge: 'ACAD',
-  },
-  {
-    id: 'projects',
-    name: 'Projects',
-    preset: 4,
-    freq: '101.1',
-    mhz: 101.1,
-    tagline: 'DokuMind & AI Systems',
-    badge: 'CODE',
-  },
-  {
-    id: 'skills',
-    name: 'Skills',
-    preset: 5,
-    freq: '104.7',
-    mhz: 104.7,
-    tagline: 'AI, ML & Architecture',
-    badge: 'TECH',
-  },
-  {
-    id: 'honors',
-    name: 'Honors',
-    preset: 6,
-    freq: '107.9',
-    mhz: 107.9,
-    tagline: 'Awards & Certifications',
-    badge: 'AWARD',
-  },
-];
 
 interface RetroRadioProps {
   activeStation: RadioStationId;
@@ -84,12 +29,13 @@ export const RetroRadio: React.FC<RetroRadioProps> = ({
   activeStation,
   onStationChange,
 }) => {
+  const { stations, language } = useLanguage();
   const [audioEnabled, setAudioEnabled] = useState(false);
   const audioCtxRef = useRef<AudioContext | null>(null);
 
   // Current station index (0 to 5)
-  const currentIndex = RADIO_STATIONS.findIndex((s) => s.id === activeStation);
-  const currentStation = RADIO_STATIONS[currentIndex] || RADIO_STATIONS[0];
+  const currentIndex = stations.findIndex((s) => s.id === activeStation);
+  const currentStation = stations[currentIndex] || stations[0];
 
   // Wheel rotation angle (60 degrees per station across 6 stations)
   const wheelAngle = currentIndex * 60;
@@ -106,7 +52,7 @@ export const RetroRadio: React.FC<RetroRadioProps> = ({
   });
 
   const [dateStr, setDateStr] = useState<string>(() => {
-    return new Intl.DateTimeFormat('en-GB', {
+    return new Intl.DateTimeFormat(language === 'fr' ? 'fr-FR' : 'en-GB', {
       timeZone: 'Europe/Paris',
       weekday: 'short',
       day: '2-digit',
@@ -127,7 +73,7 @@ export const RetroRadio: React.FC<RetroRadioProps> = ({
         }).format(now)
       );
       setDateStr(
-        new Intl.DateTimeFormat('en-GB', {
+        new Intl.DateTimeFormat(language === 'fr' ? 'fr-FR' : 'en-GB', {
           timeZone: 'Europe/Paris',
           weekday: 'short',
           day: '2-digit',
@@ -139,7 +85,7 @@ export const RetroRadio: React.FC<RetroRadioProps> = ({
     updateTime();
     const timer = setInterval(updateTime, 1000);
     return () => clearInterval(timer);
-  }, []);
+  }, [language]);
 
   // Synthesize short retro radio tuning blip
   const playTuningSound = () => {
@@ -176,15 +122,15 @@ export const RetroRadio: React.FC<RetroRadioProps> = ({
   };
 
   const handleNextStation = () => {
-    const nextIdx = (currentIndex + 1) % RADIO_STATIONS.length;
+    const nextIdx = (currentIndex + 1) % stations.length;
     playTuningSound();
-    onStationChange(RADIO_STATIONS[nextIdx].id);
+    onStationChange(stations[nextIdx].id);
   };
 
   const handlePrevStation = () => {
-    const prevIdx = (currentIndex - 1 + RADIO_STATIONS.length) % RADIO_STATIONS.length;
+    const prevIdx = (currentIndex - 1 + stations.length) % stations.length;
     playTuningSound();
-    onStationChange(RADIO_STATIONS[prevIdx].id);
+    onStationChange(stations[prevIdx].id);
   };
 
   const handleSelectStation = (id: RadioStationId) => {
@@ -753,7 +699,7 @@ export const RetroRadio: React.FC<RetroRadioProps> = ({
         }}
         className="fp-radio-buttons-grid"
       >
-        {RADIO_STATIONS.map((station) => {
+        {stations.map((station) => {
           const isActive = station.id === activeStation;
           return (
             <button

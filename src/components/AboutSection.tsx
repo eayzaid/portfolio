@@ -2,7 +2,7 @@ import React from 'react';
 import { PixelIcon } from './PixelIcon';
 import { NantesTimeBox } from './NantesTimeBox';
 import { TrueOracleLogo, TrueMongoDBLogo, TrueLinuxLogo } from './TrueLogos';
-import { resumeData } from '../data/resumeData';
+import { useLanguage } from '../context/LanguageContext';
 
 const renderCertLogo = (issuer: string, size = 16) => {
   const norm = issuer.toLowerCase();
@@ -19,6 +19,7 @@ const renderCertLogo = (issuer: string, size = 16) => {
 };
 
 export const AboutSection: React.FC = () => {
+  const { resumeData } = useLanguage();
   return (
     <div style={{ display: 'grid', gap: '24px' }}>
       {/* Primary About Card with Nantes Locale & Live Paris Time in Top-Right Corner */}

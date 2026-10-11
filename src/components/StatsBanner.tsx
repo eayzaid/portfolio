@@ -1,8 +1,9 @@
 import React from 'react';
 import { PixelIcon } from './PixelIcon';
-import { resumeData } from '../data/resumeData';
+import { useLanguage } from '../context/LanguageContext';
 
 export const StatsBanner: React.FC = () => {
+  const { resumeData } = useLanguage();
   return (
     <section className="fp-stats" aria-label="Key Highlights Summary" style={{ marginTop: '24px' }}>
       {resumeData.stats.map((stat, idx) => (

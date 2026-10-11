@@ -1,9 +1,10 @@
 import React from 'react';
 import { PixelIcon } from './PixelIcon';
 import { TrueGitHubLogo, TrueLinkedInLogo, TrueEmailLogo, TruePhoneLogo } from './TrueLogos';
-import { resumeData } from '../data/resumeData';
+import { useLanguage } from '../context/LanguageContext';
 
 export const Footer: React.FC = () => {
+  const { resumeData, t } = useLanguage();
   return (
     <footer
       className="fp-card"
@@ -40,10 +41,10 @@ export const Footer: React.FC = () => {
             target="_blank"
             rel="noreferrer"
             className="fp-btn fp-btn--sm fp-btn--primary"
-            title="Download Zaidane Ayman's Resume (PDF)"
+            title={t('footer.downloadResume', 'Download Resume')}
           >
             <PixelIcon name="download" size={14} style={{ marginRight: '6px' }} />
-            Download Resume
+            {t('footer.downloadResume', 'Download Resume')}
           </a>
           <a
             href={`mailto:${resumeData.personal.email}`}

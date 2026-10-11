@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { PixelIcon } from './PixelIcon';
 import { TrueOracleLogo, TrueMongoDBLogo, TrueLinuxLogo } from './TrueLogos';
-import { resumeData } from '../data/resumeData';
+import { useLanguage } from '../context/LanguageContext';
 import { formatEmphasizedText } from '../utils/formatText';
 
 const renderCertLogo = (issuer: string, size = 18) => {
@@ -19,6 +19,7 @@ const renderCertLogo = (issuer: string, size = 18) => {
 };
 
 export const HonorsCertificationsSection: React.FC = () => {
+  const { resumeData, t } = useLanguage();
   const [selectedCert, setSelectedCert] = useState<{ title: string; imageUrl: string } | null>(null);
 
   return (
@@ -26,7 +27,7 @@ export const HonorsCertificationsSection: React.FC = () => {
       {/* 1. Honors, Awards & Competitive Programming */}
       <div>
         <div className="fp-label" style={{ marginBottom: '12px' }}>
-          <span>Honors &amp; Competitive Programming</span>
+          <span>{t('sections.honorsTitle', 'Honors & Competitive Programming')}</span>
         </div>
 
         <div style={{ display: 'grid', gap: '16px', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 320px), 1fr))' }}>
@@ -65,7 +66,7 @@ export const HonorsCertificationsSection: React.FC = () => {
       {/* 2. Industry Certifications */}
       <div>
         <div className="fp-label" style={{ marginBottom: '12px' }}>
-          <span>Industry Certifications</span>
+          <span>{t('sections.certificationsTitle', 'Industry Certifications')}</span>
         </div>
 
         <div style={{ display: 'grid', gap: '16px', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 280px), 1fr))' }}>
@@ -102,7 +103,7 @@ export const HonorsCertificationsSection: React.FC = () => {
                         imageUrl: cert.imageUrl!,
                       })
                     }
-                    title="Click to view full certificate"
+                    title={t('sections.clickToViewCert', 'Click to view full certificate')}
                   >
                     <img
                       src={cert.imageUrl}
@@ -131,7 +132,7 @@ export const HonorsCertificationsSection: React.FC = () => {
                     marginBottom: '10px',
                   }}
                 >
-                  Issuer: {cert.issuer}
+                  {t('sections.issuer', 'Issuer:')} {cert.issuer}
                 </div>
               </div>
 
@@ -161,7 +162,7 @@ export const HonorsCertificationsSection: React.FC = () => {
                     title={`Check ${cert.title} credential verification`}
                   >
                     {renderCertLogo(cert.issuer, 14)}
-                    <span>Check Certificate</span>
+                    <span>{t('sections.verifyCredential', 'Check Certificate')}</span>
                   </a>
                 </div>
               )}
@@ -173,7 +174,7 @@ export const HonorsCertificationsSection: React.FC = () => {
       {/* 3. Community Leadership & Volunteering */}
       <div>
         <div className="fp-label" style={{ marginBottom: '12px' }}>
-          <span>Community Leadership &amp; Initiatives</span>
+          <span>{t('sections.communityTitle', 'Community Leadership & Initiatives')}</span>
         </div>
 
         <div style={{ display: 'grid', gap: '16px', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 340px), 1fr))' }}>
@@ -209,7 +210,7 @@ export const HonorsCertificationsSection: React.FC = () => {
       {/* 4. Spoken Languages */}
       <div>
         <div className="fp-label" style={{ marginBottom: '12px' }}>
-          <span>Spoken Languages</span>
+          <span>{t('sections.languagesTitle', 'Spoken Languages')}</span>
         </div>
 
         <div style={{ display: 'grid', gap: '12px', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 200px), 1fr))' }}>
@@ -281,7 +282,7 @@ export const HonorsCertificationsSection: React.FC = () => {
                 className="fp-btn fp-btn--sm"
                 onClick={() => setSelectedCert(null)}
               >
-                ✕ Close
+                ✕ {t('sections.closeModal', 'Close')}
               </button>
             </div>
             <img

@@ -1,0 +1,349 @@
+{
+  "meta": {
+    "lang": "fr",
+    "name": "Français",
+    "dir": "ltr"
+  },
+  "nav": {
+    "brand": "zaidane.ayman",
+    "blog": "Blog",
+    "themeLight": "CLAIR",
+    "themeDark": "SOMBRE",
+    "langToggle": "EN"
+  },
+  "ticker": {
+    "status": "STATUT : RECHERCHE DE STAGE DE 16 SEMAINES DÈS MAI 2027 • IA × GÉNIE LOGICIEL • FRANCE / UE"
+  },
+  "stations": {
+    "about": {
+      "name": "À Propos",
+      "tagline": "Bio, Vision & Profil",
+      "badge": "BIO"
+    },
+    "experience": {
+      "name": "Expérience",
+      "tagline": "NT SHIELD & Groupe OCP",
+      "badge": "PRO"
+    },
+    "education": {
+      "name": "Formation",
+      "tagline": "Centrale Nantes & ENSAM",
+      "badge": "ACAD"
+    },
+    "projects": {
+      "name": "Projets",
+      "tagline": "DokuMind & Systèmes IA",
+      "badge": "CODE"
+    },
+    "skills": {
+      "name": "Compétences",
+      "tagline": "Stack & Spécialités",
+      "badge": "TECH"
+    },
+    "honors": {
+      "name": "Distinctions & Certifs",
+      "tagline": "Prix & Titres vérifiés",
+      "badge": "DIST"
+    }
+  },
+  "radio": {
+    "statusLocked": "SIGNAL VERROUILLÉ",
+    "statusTuning": "RECHERCHE DE FRÉQUENCE...",
+    "presets": "PRÉSÉLECTIONS",
+    "tuningStation": "SYNTONISATION DE LA STATION...",
+    "scrollToTop": "Haut de page"
+  },
+  "hero": {
+    "bioLead": "Élève-ingénieur en informatique",
+    "bioMid": "en double diplôme à l'",
+    "bioSchool": "École Centrale de Nantes",
+    "bioCountry": "en France",
+    "bioGoal": "passionné par la résolution de problèmes concrets à l'intersection de l'",
+    "specsTitle": "Spécifications du stage",
+    "durationLabel": "DURÉE :",
+    "durationValue": "16 SEMAINES",
+    "startLabel": "DÉBUT SOUHAITÉ :",
+    "startValue": "Mai 2027",
+    "focusLabel": "SPÉCIALITÉ :",
+    "focusValue": "IA & Génie Logiciel",
+    "mobilityLabel": "MOBILITÉ :",
+    "mobilityValue": "Présentiel France et Europe",
+    "downloadResume": "Télécharger mon CV",
+    "toggle8bit": "Portrait 8-bit",
+    "toggleReal": "Photo réelle"
+  },
+  "sections": {
+    "experienceTitle": "Expérience professionnelle",
+    "communityTitle": "Engagement associatif & Bénévolat",
+    "educationTitle": "Formation académique",
+    "projectsTitle": "Projets phares",
+    "skillsTitle": "Compétences techniques",
+    "honorsTitle": "Prix & Concours",
+    "certificationsTitle": "Certifications professionnelles",
+    "languagesTitle": "Langues parlées",
+    "issuer": "Émetteur :",
+    "verifyCredential": "Vérifier la certification",
+    "viewCode": "Voir le code",
+    "liveDemo": "Démo en direct",
+    "clickToViewCert": "Cliquer pour agrandir le certificat",
+    "closeModal": "Fermer"
+  },
+  "footer": {
+    "downloadResume": "Télécharger le CV"
+  },
+  "blog": {
+    "transmission": "TRANSMISSION // À VENIR",
+    "title": "la section blog sera ajoutée prochainement",
+    "subtitle": "Articles d'ingénierie et retours d'expérience en cours de rédaction",
+    "returnHome": "← Retour au Portfolio"
+  },
+  "notFound": {
+    "errorCode": "[ ERREUR 404 // PARASITES SUR LA FRÉQUENCE ]",
+    "title": "Page introuvable",
+    "message": "La fréquence ou page demandée n'existe pas ou a été déplacée vers d'autres coordonnées.",
+    "returnHome": "Retour au Portfolio",
+    "exploreBlog": "Explorer le Blog"
+  },
+  "resumeModal": {
+    "title": "Curriculum Vitae",
+    "downloadPdf": "Télécharger PDF",
+    "close": "Fermer",
+    "summary": "Profil",
+    "education": "Formation",
+    "experience": "Expérience professionnelle",
+    "projects": "Projets",
+    "skills": "Compétences techniques",
+    "certifications": "Certifications",
+    "honors": "Prix & Distinctions",
+    "leadership": "Engagement associatif",
+    "languages": "Langues",
+    "targetObjective": "Objectif recherché",
+    "targetText": "À la recherche d'un stage de 16 semaines dès mai 2027 en IA et Génie Logiciel (France / Europe).",
+    "sendEmail": "Envoyer un e-mail",
+    "downloadResume": "Télécharger mon CV",
+    "copied": "Copié dans le presse-papier !"
+  },
+  "resumeData": {
+    "personal": {
+      "name": "Zaidane Ayman",
+      "role": "Futur ingénieur en IA & Génie Logiciel",
+      "subheading": "Double diplôme : École Centrale de Nantes & ENSAM Meknès",
+      "statusBadge": "Disponible dès mai 2027",
+      "email": "aymanzaidanepro@gmail.com",
+      "phone": "+33 6 76 05 21 18",
+      "resumePdf": "/cv_fr_en.pdf",
+      "location": "Nantes, France",
+      "linkedin": "https://www.linkedin.com/in/zaidane-ayman/",
+      "linkedinUsername": "zaidane-ayman",
+      "github": "https://github.com/eayzaid",
+      "githubUsername": "eayzaid",
+      "summary": "Élève-ingénieur en informatique en double diplôme à l'École Centrale de Nantes, passionné par la résolution de problèmes concrets à l'intersection de l'intelligence artificielle et du génie logiciel.",
+      "internshipGoal": {
+        "duration": "16 SEMAINES",
+        "startDate": "Mai 2027",
+        "targetDomain": "IA & Génie Logiciel",
+        "locations": "Présentiel France et Europe"
+      }
+    },
+    "stats": [
+      { "label": "Recherche de stage", "value": "Mai 2027 (16 sem.)", "icon": "star" },
+      { "label": "Classement concours", "value": "1er ENSAM / 15e Nat.", "icon": "trophy" },
+      { "label": "Fonds collectés", "value": "20 000 $+ Charité", "icon": "heart" }
+    ],
+    "education": [
+      {
+        "institution": "École Centrale de Nantes",
+        "location": "Nantes, France",
+        "degree": "Diplôme d'Ingénieur généraliste (Master of Science)",
+        "period": "2026 – Sept 2028 (prévu)",
+        "status": "En cours",
+        "badge": "Double diplôme",
+        "highlights": [
+          "Formation d'ingénieur avancée en systèmes intelligents, calcul distribué et architecture des données.",
+          "Préparation à l'écosystème technologique européen et à la recherche."
+        ]
+      },
+      {
+        "institution": "École Nationale Supérieure d'Arts et Métiers – Meknès",
+        "location": "Meknès, Maroc",
+        "degree": "Diplôme d'Ingénieur d'État en Informatique : Génie Logiciel & Systèmes Intelligents",
+        "period": "2022 – 2026",
+        "status": "Diplômé / En cours",
+        "badge": "Grande École",
+        "equivalence": "Équivalent Master of Science in Engineering (M.Sc.)",
+        "highlights": [
+          "Fondations rigoureuses en algorithmique, architectures systèmes et modèles d'IA.",
+          "Direction de projets logiciels universitaires et initiatives associatives."
+        ]
+      }
+    ],
+    "experience": [
+      {
+        "company": "NT SHIELD",
+        "location": "Maroc",
+        "role": "Stagiaire Ingénieur IA – Détection d'anomalies en Open Banking",
+        "period": "Été 2026",
+        "badge": "IA & Fintech",
+        "descriptionBullets": [
+          "Conception d'**AI-BIMAC**, un moteur de détection d'anomalies en temps réel pour l'**open banking** avec **Isolation Forest**, explicabilité **SHAP**, et microservices **FastAPI** orchestrés via **RabbitMQ** et **Airflow**."
+        ],
+        "technologies": ["Python", "FastAPI", "Scikit-Learn", "RabbitMQ", "Apache Airflow"]
+      },
+      {
+        "company": "Groupe OCP",
+        "location": "Maroc",
+        "role": "Stagiaire Développeur Full-Stack",
+        "period": "Été 2025",
+        "badge": "Full-Stack Entreprise",
+        "repoUrl": "https://github.com/eayzaid/OCPInterns",
+        "descriptionBullets": [
+          "Développement d'**OCPInterns**, une plateforme **MERN** complète avec **API REST** sécurisées par **JWT**, tableaux de bord analytiques, génération automatisée de **PDF** et vérification par **QR code**."
+        ],
+        "technologies": ["React", "Node.js", "Express", "MongoDB"]
+      }
+    ],
+    "projects": [
+      {
+        "id": "agile-microservices",
+        "title": "Agile Workspace",
+        "subtitle": "Plateforme de microservices événementiels",
+        "period": "2026",
+        "technologies": ["Spring Boot", "Spring Cloud", "RabbitMQ", "PostgreSQL", "MongoDB", "React", "Docker", "Kubernetes"],
+        "description": "Architecture événementielle avec **Spring Cloud** et **RabbitMQ**, découplage des flux asynchrones et optimisation de la vélocité des sprints.",
+        "repoUrl": "https://github.com/eayzaid/Agile_Microservices",
+        "featured": true
+      },
+      {
+        "id": "dokumind",
+        "title": "DokuMind",
+        "subtitle": "SaaS d'intégration documentaire intelligent (RAG & Multi-Tenant)",
+        "period": "2025 - 2026",
+        "technologies": ["Spring Boot", "Python", "React", "LangChain", "Docker", "ChromaDB"],
+        "description": "Plateforme SaaS **RAG** multi-tenant avec **LangChain** et **Spring Boot**, automatisant l'indexation de documents pour l'onboarding d'entreprise.",
+        "repoUrl": "https://github.com/eayzaid/DokuMind",
+        "featured": true
+      },
+      {
+        "id": "egrading",
+        "title": "eGrading",
+        "subtitle": "Plateforme d'examens numériques pour l'ENSAM",
+        "period": "2024 - 2025",
+        "technologies": ["Spring Boot", "React", "TypeScript", "PostgreSQL", "MongoDB", "Docker"],
+        "description": "Plateforme officielle de passage d'examens de l'ENSAM avec **Spring Boot** et **React**, gérant la génération et la correction automatisée de plus de **1 000 examens mensuels**.",
+        "repoUrl": "https://github.com/eayzaid/eGrading",
+        "featured": true
+      },
+      {
+        "id": "emotion-rec",
+        "title": "Reconnaissance d'émotions faciales",
+        "subtitle": "CNN de Deep Learning avec Transfer Learning",
+        "period": "2024",
+        "technologies": ["Python", "TensorFlow", "Mediapipe", "Optuna"],
+        "description": "Entraînement d'un modèle **CNN** inspiré de **VGGNet** sur **FER-2013**, exploitant **Mediapipe** et **Optuna** pour optimiser le score F1 sur 7 classes d'émotions.",
+        "repoUrl": "https://github.com/eayzaid/DL_facial_emotion_recognition",
+        "featured": true
+      },
+      {
+        "id": "wassal",
+        "title": "Plateforme WASSAL",
+        "subtitle": "Système de coordination opérationnelle et de bénévolat",
+        "period": "2023 - 2026",
+        "technologies": ["Spring Boot", "React", "TypeScript", "PostgreSQL", "Docker", "TailwindCSS"],
+        "description": "Conception d'une plateforme de gestion des membres et des opérations pour **Caravane El Hayat** avec **Spring Boot** et **React**, fluidifiant l'intégration des bénévoles et la logistique de terrain.",
+        "repoUrl": "https://github.com/eayzaid/wassal",
+        "featured": false
+      }
+    ],
+    "skills": [
+      {
+        "category": "IA & Machine Learning",
+        "skills": ["Scikit-Learn", "TensorFlow", "LangChain"]
+      },
+      {
+        "category": "Backend & Systèmes",
+        "skills": ["Spring Boot", "FastAPI", "Express", "Node.js", "RabbitMQ", "Apache Airflow"]
+      },
+      {
+        "category": "Frontend",
+        "skills": ["React", "TypeScript", "TailwindCSS", "HTML5/CSS3"]
+      },
+      {
+        "category": "Langages",
+        "skills": ["Java", "Python", "JavaScript", "Bash"]
+      },
+      {
+        "category": "Bases de données & Stockage",
+        "skills": ["PostgreSQL", "MongoDB", "Redis", "MySQL", "OracleDB"]
+      },
+      {
+        "category": "DevOps & Outils",
+        "skills": ["Docker", "K8s", "Git", "Linux", "Postman", "Vercel", "Netlify"]
+      }
+    ],
+    "certifications": [
+      {
+        "title": "Oracle Cloud Infrastructure Foundations Associate",
+        "issuer": "Oracle",
+        "icon": "star",
+        "imageUrl": "/certificates/OCI_founations_associate_certificatre.jpg",
+        "credentialUrl": "https://catalog-education.oracle.com/ords/certview/sharebadge?id=CFA92E3FEE960CD6415BCFCEF5CD69406DDC741CB6D9B08E0B5831D475105AE6"
+      },
+      {
+        "title": "MongoDB Developer Path (Node.js)",
+        "issuer": "MongoDB",
+        "icon": "leaf",
+        "imageUrl": "/certificates/mongodb_nodejs_developer_path_certificatre_page.jpg",
+        "credentialUrl": "https://learn.mongodb.com/c/GTy2W196QvG583foAzK8vg"
+      },
+      {
+        "title": "Linux Essentials Certificate",
+        "issuer": "Linux Professional Institute",
+        "icon": "tree",
+        "imageUrl": "/certificates/LPI_certificate.jpg",
+        "credentialUrl": "https://www.credly.com/badges/f3f66f5c-b653-42d9-b298-481c24de6b87/linked_in_profile"
+      }
+    ],
+    "honors": [
+      {
+        "title": "Arts et Métiers Programming Contest",
+        "organization": "ENSAM",
+        "year": "2024",
+        "ranking": "1er à l'ENSAM · 15e National",
+        "icon": "trophy"
+      },
+      {
+        "title": "CyberAI CTF",
+        "organization": "GadzIT Club",
+        "year": "2026",
+        "ranking": "2e Place",
+        "icon": "star"
+      }
+    ],
+    "leadership": [
+      {
+        "organization": "Caravane El Hayat (Comité Bénévolat ENSAM Meknès)",
+        "role": "Responsable Réseaux Sociaux & Pôle Informatique",
+        "location": "Meknès, Maroc",
+        "period": "2023 – 2026",
+        "bullets": [
+          "Développement de **WASSAL**, plateforme de coordination full-stack (**Spring Boot** + **React.js**) pour les équipes.",
+          "Direction de campagnes médiatiques multicanales pendant 2 ans avec une équipe de **15+ membres**, contribuant à lever plus de **20 000 $** pour des actions caritatives."
+        ]
+      },
+      {
+        "organization": "GadzIT – Club Informatique, ENSAM",
+        "role": "Responsable du Pôle Programmation Compétitive",
+        "location": "Meknès, Maroc",
+        "period": "2024 – 2025",
+        "bullets": [
+          "Encadrement de **30+ étudiants** en algorithmique et structures de données, générant une hausse de **200 %+** de la participation active via des ateliers hebdomadaires."
+        ]
+      }
+    ],
+    "languages": [
+      { "language": "Arabe", "proficiency": "Langue maternelle", "level": "Langue maternelle" },
+      { "language": "Anglais", "proficiency": "Courant", "level": "Usage professionnel complet" },
+      { "language": "Français", "proficiency": "Courant", "level": "Usage professionnel complet" }
+    ]
+  }
+}

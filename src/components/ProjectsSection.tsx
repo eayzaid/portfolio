@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import { TrueGitHubLogo } from './TrueLogos';
-import { resumeData } from '../data/resumeData';
+import { useLanguage } from '../context/LanguageContext';
 import { formatEmphasizedText } from '../utils/formatText';
 
 export const ProjectsSection: React.FC = () => {
+  const { resumeData, t, language } = useLanguage();
   const [filter, setFilter] = useState<'all' | 'ai' | 'fullstack'>('all');
 
   const filteredProjects = resumeData.projects.filter((p) => {
@@ -39,7 +40,7 @@ export const ProjectsSection: React.FC = () => {
         }}
       >
         <div className="fp-label">
-          <span>Featured Engineering Projects</span>
+          <span>{t('sections.projectsTitle', 'Featured Engineering Projects')}</span>
         </div>
 
         <div style={{ display: 'flex', gap: '8px' }}>
@@ -48,7 +49,7 @@ export const ProjectsSection: React.FC = () => {
             className={`fp-btn fp-btn--sm ${filter === 'all' ? 'fp-btn--primary' : ''}`}
             onClick={() => setFilter('all')}
           >
-            All ({resumeData.projects.length})
+            {language === 'fr' ? 'Tous' : 'All'} ({resumeData.projects.length})
           </button>
           <button
             type="button"
@@ -62,7 +63,7 @@ export const ProjectsSection: React.FC = () => {
             className={`fp-btn fp-btn--sm ${filter === 'fullstack' ? 'fp-btn--primary' : ''}`}
             onClick={() => setFilter('fullstack')}
           >
-            Full-Stack Systems
+            {language === 'fr' ? 'Systèmes Full-Stack' : 'Full-Stack Systems'}
           </button>
         </div>
       </div>
@@ -135,7 +136,7 @@ export const ProjectsSection: React.FC = () => {
                     title={`Visit ${proj.title} repository on GitHub`}
                   >
                     <TrueGitHubLogo size={14} />
-                    <span>Visit GitHub</span>
+                    <span>{t('sections.viewCode', 'Visit GitHub')}</span>
                   </a>
                 </div>
               )}

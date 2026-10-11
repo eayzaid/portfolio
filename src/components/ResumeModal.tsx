@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { PixelIcon } from './PixelIcon';
 import { TruePhoneLogo } from './TrueLogos';
-import { resumeData } from '../data/resumeData';
+import { useLanguage } from '../context/LanguageContext';
 
 interface ResumeModalProps {
   isOpen: boolean;
@@ -9,6 +9,7 @@ interface ResumeModalProps {
 }
 
 export const ResumeModal: React.FC<ResumeModalProps> = ({ isOpen, onClose }) => {
+  const { resumeData, t } = useLanguage();
   const [copied, setCopied] = useState(false);
 
   if (!isOpen) return null;
@@ -70,7 +71,7 @@ export const ResumeModal: React.FC<ResumeModalProps> = ({ isOpen, onClose }) => 
             onClick={onClose}
             aria-label="Close dialog"
           >
-            ✕ Close
+            ✕ {t('resumeModal.close', 'Close')}
           </button>
         </div>
 
@@ -95,7 +96,7 @@ export const ResumeModal: React.FC<ResumeModalProps> = ({ isOpen, onClose }) => 
             onClick={handleCopyEmail}
           >
             <PixelIcon name="mail" size={12} />
-            {copied ? 'Copied to clipboard!' : resumeData.personal.email}
+            {copied ? t('resumeModal.copied', 'Copied to clipboard!') : resumeData.personal.email}
           </button>
           <a
             href={`tel:${resumeData.personal.phone.replace(/\s+/g, '')}`}
@@ -118,17 +119,16 @@ export const ResumeModal: React.FC<ResumeModalProps> = ({ isOpen, onClose }) => 
           }}
         >
           <div className="fp-label" style={{ marginBottom: '4px' }}>
-            <span>Target Objective</span>
+            <span>{t('resumeModal.targetObjective', 'Target Objective')}</span>
           </div>
           <div>
-            Seeking a <strong>16-week internship starting May 2027</strong> in{' '}
-            <strong>AI and Software Engineering</strong> (France / EU).
+            {t('resumeModal.targetText', 'Seeking a 16-week internship starting May 2027 in AI and Software Engineering (France / EU).')}
           </div>
         </div>
 
         {/* Quick Highlights */}
         <div style={{ marginBottom: '16px' }}>
-          <h4 style={{ marginBottom: '8px' }}>Education</h4>
+          <h4 style={{ marginBottom: '8px' }}>{t('resumeModal.education', 'Education')}</h4>
           <ul style={{ margin: 0, paddingLeft: '18px', fontSize: '13px', lineHeight: 1.5 }}>
             {resumeData.education.map((edu, idx) => (
               <li key={idx} style={{ marginBottom: '4px' }}>
@@ -140,7 +140,7 @@ export const ResumeModal: React.FC<ResumeModalProps> = ({ isOpen, onClose }) => 
         </div>
 
         <div style={{ marginBottom: '20px' }}>
-          <h4 style={{ marginBottom: '8px' }}>Key Experience</h4>
+          <h4 style={{ marginBottom: '8px' }}>{t('resumeModal.experience', 'Key Experience')}</h4>
           <ul style={{ margin: 0, paddingLeft: '18px', fontSize: '13px', lineHeight: 1.5 }}>
             {resumeData.experience.map((exp, idx) => (
               <li key={idx} style={{ marginBottom: '4px' }}>
@@ -159,14 +159,14 @@ export const ResumeModal: React.FC<ResumeModalProps> = ({ isOpen, onClose }) => 
             className="fp-btn fp-btn--primary"
           >
             <PixelIcon name="download" size={14} />
-            Download My Resume
+            {t('resumeModal.downloadResume', 'Download My Resume')}
           </a>
           <a
             href={`mailto:${resumeData.personal.email}`}
             className="fp-btn fp-btn--primary"
           >
             <PixelIcon name="mail" size={14} />
-            Send Email
+            {t('resumeModal.sendEmail', 'Send Email')}
           </a>
         </div>
       </div>

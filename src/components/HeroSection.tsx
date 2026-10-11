@@ -3,9 +3,10 @@ import { PixelIcon } from './PixelIcon';
 import { NantesTimeBox } from './NantesTimeBox';
 import { TrueGitHubLogo, TrueLinkedInLogo, TrueEmailLogo, TruePhoneLogo } from './TrueLogos';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from './ui/8bit/select';
-import { resumeData } from '../data/resumeData';
+import { useLanguage } from '../context/LanguageContext';
 
 export const HeroSection: React.FC = () => {
+  const { resumeData, t, language } = useLanguage();
   const [avatarMode, setAvatarMode] = useState<'8bit' | 'real'>('8bit');
 
   return (
@@ -98,11 +99,23 @@ export const HeroSection: React.FC = () => {
               margin: '0 0 20px 0',
             }}
           >
-            <strong>Computer Science engineering student</strong> pursuing a dual degree at{' '}
-            <strong>École Centrale de Nantes</strong> in <strong>France</strong>, looking forward to{' '}
-            <em><strong>learning new things each day</strong></em> while solving problems at the intersection of{' '}
-            <strong style={{ color: 'var(--fp-primary)' }}>AI</strong> and{' '}
-            <strong style={{ color: 'var(--fp-primary)' }}>Software</strong>.
+            {language === 'fr' ? (
+              <>
+                <strong>Élève-ingénieur en informatique</strong> en double diplôme à l'
+                <strong>École Centrale de Nantes</strong> en <strong>France</strong>, passionné par la{' '}
+                <em><strong>résolution de problèmes concrets</strong></em> à l'intersection de l'
+                <strong style={{ color: 'var(--fp-primary)' }}>IA</strong> et du{' '}
+                <strong style={{ color: 'var(--fp-primary)' }}>Génie Logiciel</strong>.
+              </>
+            ) : (
+              <>
+                <strong>Computer Science engineering student</strong> pursuing a dual degree at{' '}
+                <strong>École Centrale de Nantes</strong> in <strong>France</strong>, looking forward to{' '}
+                <em><strong>learning new things each day</strong></em> while solving problems at the intersection of{' '}
+                <strong style={{ color: 'var(--fp-primary)' }}>AI</strong> and{' '}
+                <strong style={{ color: 'var(--fp-primary)' }}>Software</strong>.
+              </>
+            )}
           </p>
 
           {/* Quick Target Specs with DURATION: 16 WEEKS */}
@@ -118,13 +131,13 @@ export const HeroSection: React.FC = () => {
             }}
           >
             <div className="fp-label" style={{ marginBottom: '8px' }}>
-              <span>Internship Specifications</span>
+              <span>{t('hero.specsTitle', 'Internship Specifications')}</span>
             </div>
             <div style={{ fontSize: '13px', lineHeight: 1.6, display: 'grid', gap: '4px', textAlign: 'left' }}>
-              <div><strong>DURATION:</strong> 16 WEEKS</div>
-              <div><strong>TARGET START:</strong> {resumeData.personal.internshipGoal.startDate}</div>
-              <div><strong>FOCUS:</strong> {resumeData.personal.internshipGoal.targetDomain}</div>
-              <div><strong>MOBILITY:</strong> {resumeData.personal.internshipGoal.locations}</div>
+              <div><strong>{t('hero.durationLabel', 'DURATION:')}</strong> {resumeData.personal.internshipGoal.duration}</div>
+              <div><strong>{t('hero.startLabel', 'TARGET START:')}</strong> {resumeData.personal.internshipGoal.startDate}</div>
+              <div><strong>{t('hero.focusLabel', 'FOCUS:')}</strong> {resumeData.personal.internshipGoal.targetDomain}</div>
+              <div><strong>{t('hero.mobilityLabel', 'MOBILITY:')}</strong> {resumeData.personal.internshipGoal.locations}</div>
             </div>
           </div>
 
@@ -147,7 +160,7 @@ export const HeroSection: React.FC = () => {
               title="Download Zaidane Ayman's Resume (PDF)"
             >
               <PixelIcon name="download" size={14} />
-              <span>Download My Resume</span>
+              <span>{t('hero.downloadResume', 'Download My Resume')}</span>
             </a>
           </div>
         </div>
@@ -186,8 +199,8 @@ export const HeroSection: React.FC = () => {
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="8bit">8-BIT AVATAR</SelectItem>
-                    <SelectItem value="real">REAL PHOTO</SelectItem>
+                    <SelectItem value="8bit">{t('hero.toggle8bit', '8-bit Portrait').toUpperCase()}</SelectItem>
+                    <SelectItem value="real">{t('hero.toggleReal', 'Real Photo').toUpperCase()}</SelectItem>
                   </SelectContent>
                 </Select>
               </div>

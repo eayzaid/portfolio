@@ -1,7 +1,10 @@
 import { Link } from 'react-router-dom';
 import { PixelIcon } from '../components/PixelIcon';
+import { useLanguage } from '../context/LanguageContext';
 
 export function BlogPage() {
+  const { t } = useLanguage();
+
   return (
     <div
       style={{
@@ -45,7 +48,7 @@ export function BlogPage() {
           }}
         >
           <span className="fp-led" style={{ background: 'var(--fp-primary)' }} />
-          <span>TRANSMISSION // UPCOMING</span>
+          <span>{t('blog.transmission', 'TRANSMISSION // UPCOMING')}</span>
         </div>
 
         <h1
@@ -57,7 +60,7 @@ export function BlogPage() {
             letterSpacing: '-0.02em',
           }}
         >
-          the blog section is going to be added later
+          {t('blog.title', 'the blog section is going to be added later')}
         </h1>
 
         <p
@@ -69,7 +72,7 @@ export function BlogPage() {
             lineHeight: 1.6,
           }}
         >
-          Engineering logbooks &amp; technical dispatches are in preparation
+          {t('blog.subtitle', 'Engineering logbooks & technical dispatches are in preparation')}
           <span className="fp-blink" style={{ marginLeft: '6px' }}>▌</span>
         </p>
 
@@ -84,7 +87,7 @@ export function BlogPage() {
             textTransform: 'uppercase',
           }}
         >
-          ← Return to Portfolio
+          {t('blog.returnHome', '← Return to Portfolio')}
         </Link>
       </div>
     </div>
