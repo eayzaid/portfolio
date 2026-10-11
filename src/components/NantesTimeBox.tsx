@@ -57,93 +57,40 @@ export const NantesTimeBox: React.FC<NantesTimeBoxProps> = ({ style, size = 'md'
 
   return (
     <div
-      className="fp-card"
-      style={{
-        padding: isLarge ? '6px 14px' : '3px 8px',
-        border: '2px solid var(--fp-border)',
-        background: 'var(--fp-surface-2)',
-        boxShadow: isLarge ? '4px 4px 0 var(--fp-shadow)' : '3px 3px 0 var(--fp-shadow)',
-        display: 'inline-flex',
-        alignItems: 'center',
-        gap: isLarge ? '10px' : '6px',
-        height: 'fit-content',
-        boxSizing: 'border-box',
-        whiteSpace: 'nowrap',
-        ...style,
-      }}
+      className={`fp-card fp-nantes-timebox ${isLarge ? 'fp-nantes-timebox--lg' : ''}`}
+      style={style}
       title="Current Local Time in Nantes (Paris TimeZone Europe/Paris)"
     >
-      <div
-        className="fp-label"
-        style={{
-          fontSize: isLarge ? '12px' : '11px',
-          fontWeight: 700,
-          letterSpacing: '.06em',
-          color: 'var(--fp-text)',
-          display: 'flex',
-          alignItems: 'center',
-          gap: isLarge ? '6px' : '4px',
-          textTransform: 'uppercase',
-          margin: 0,
-        }}
-      >
+      <div className="fp-nantes-timebox__location">
         <PixelIcon name="pin" size={isLarge ? 12 : 10} />
-        <span>NANTES, FRANCE</span>
+        <span>NANTES<span className="fp-nantes-timebox__country">, FRANCE</span></span>
       </div>
 
-      <span style={{ color: 'var(--fp-border)', opacity: 0.35, fontSize: isLarge ? '13px' : '11px' }}>|</span>
+      <span className="fp-nantes-timebox__divider" aria-hidden="true">|</span>
 
-      <div
-        className="fp-mono"
-        style={{
-          fontSize: isLarge ? '15px' : '12px',
-          fontWeight: 800,
-          color: 'var(--fp-primary)',
-          letterSpacing: '0.04em',
-          display: 'flex',
-          alignItems: 'baseline',
-          gap: '4px',
-          fontVariantNumeric: 'tabular-nums',
-        }}
-      >
-        <span>{timeStr}</span>
+      <div className="fp-nantes-timebox__right">
+        <div className="fp-nantes-timebox__time">
+          <span>{timeStr}</span>
+          <span className="fp-nantes-timebox__tz">PARIS</span>
+        </div>
+
+        <span className="fp-nantes-timebox__divider" aria-hidden="true">|</span>
+
+        <div className="fp-nantes-timebox__date">
+          {dateStr}
+        </div>
+
         <span
+          className="fp-led"
           style={{
-            fontSize: isLarge ? '10px' : '9px',
-            color: 'var(--fp-text)',
-            fontWeight: 700,
-            opacity: 0.8,
+            width: isLarge ? '6px' : '5px',
+            height: isLarge ? '6px' : '5px',
+            marginLeft: '2px',
+            background: 'var(--fp-primary)',
+            flexShrink: 0,
           }}
-        >
-          PARIS
-        </span>
+        />
       </div>
-
-      <span style={{ color: 'var(--fp-border)', opacity: 0.35, fontSize: isLarge ? '13px' : '11px' }}>|</span>
-
-      <div
-        className="fp-mono"
-        style={{
-          fontSize: isLarge ? '12px' : '10px',
-          color: 'var(--fp-muted)',
-          textTransform: 'uppercase',
-          fontWeight: 700,
-          letterSpacing: '0.03em',
-        }}
-      >
-        {dateStr}
-      </div>
-
-      <span
-        className="fp-led"
-        style={{
-          width: isLarge ? '6px' : '5px',
-          height: isLarge ? '6px' : '5px',
-          marginLeft: '2px',
-          background: 'var(--fp-primary)',
-          flexShrink: 0,
-        }}
-      />
     </div>
   );
 };

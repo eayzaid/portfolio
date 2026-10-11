@@ -48,14 +48,14 @@ export const Footer: React.FC = () => {
           </a>
           <a
             href={`mailto:${resumeData.personal.email}`}
-            className="fp-btn fp-btn--sm"
+            className="fp-btn fp-btn--sm fp-selectable"
           >
             <TrueEmailLogo size={14} style={{ marginRight: '6px' }} />
             {resumeData.personal.email}
           </a>
           <a
             href={`tel:${resumeData.personal.phone.replace(/\s+/g, '')}`}
-            className="fp-btn fp-btn--sm"
+            className="fp-btn fp-btn--sm fp-selectable"
           >
             <TruePhoneLogo size={14} style={{ marginRight: '6px' }} />
             {resumeData.personal.phone}

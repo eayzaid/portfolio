@@ -91,7 +91,7 @@ export const ResumeModal: React.FC<ResumeModalProps> = ({ isOpen, onClose }) => 
           </span>
           <button
             type="button"
-            className="fp-badge"
+            className="fp-badge fp-selectable"
             style={{ cursor: 'pointer' }}
             onClick={handleCopyEmail}
           >
@@ -100,7 +100,7 @@ export const ResumeModal: React.FC<ResumeModalProps> = ({ isOpen, onClose }) => 
           </button>
           <a
             href={`tel:${resumeData.personal.phone.replace(/\s+/g, '')}`}
-            className="fp-badge"
+            className="fp-badge fp-selectable"
             style={{ textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: '5px' }}
           >
             <TruePhoneLogo size={12} />

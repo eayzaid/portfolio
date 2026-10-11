@@ -11,18 +11,8 @@ export const HeroSection: React.FC = () => {
 
   return (
     <section className="fp-panel fp-gridpaper" id="hero" style={{ marginTop: '24px', position: 'relative', width: '100%', boxSizing: 'border-box' }}>
-      {/* 1. Top Header Row: Status Badge on Top-Left & Nantes Datebox on Top-Right (always in top right even on phone) */}
-      <div
-        style={{
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          width: '100%',
-          gap: '12px',
-          marginBottom: '24px',
-          flexWrap: 'wrap',
-        }}
-      >
+      {/* 1. Top Header Row: Status Badge on Top-Left & Nantes Datebox on Top-Right */}
+      <div className="fp-hero-top-row">
         <span
           className="fp-badge fp-badge--ok"
           style={{
@@ -37,8 +27,8 @@ export const HeroSection: React.FC = () => {
           {resumeData.personal.statusBadge}
         </span>
 
-        {/* Nantes Datebox always on the top right, sharing right margin */}
-        <div style={{ marginLeft: 'auto', flexShrink: 0 }}>
+        {/* Nantes Datebox always on the top right, responsive on mobile */}
+        <div className="fp-hero-time-wrapper">
           <NantesTimeBox size="lg" />
         </div>
       </div>

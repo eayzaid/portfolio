@@ -46,6 +46,223 @@ body {
   overflow-x: hidden;
 }
 
+/* --------------------------------------------------------------------------
+   Global Selection Control:
+   The website is not selectable by default (retro console / native app feel),
+   UNLESS something needs to be selected like mobile phone, email, code snippets,
+   input fields, or elements with .fp-selectable.
+-------------------------------------------------------------------------- */
+body, #root {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/* Explicitly re-enable selection on content users need to select and copy */
+input,
+textarea,
+pre,
+pre *,
+code,
+code *,
+kbd,
+samp,
+[contenteditable="true"],
+a[href^="tel:"],
+a[href^="tel:"] *,
+a[href^="mailto:"],
+a[href^="mailto:"] *,
+.fp-selectable,
+.fp-selectable *,
+[data-selectable="true"],
+[data-selectable="true"] * {
+  -webkit-user-select: text !important;
+  -moz-user-select: text !important;
+  -ms-user-select: text !important;
+  user-select: text !important;
+}
+
+/* Prevent image dragging */
+img {
+  -webkit-user-drag: none;
+  user-drag: none;
+}
+
+/* --------------------------------------------------------------------------
+   Responsive Nantes Local Time Box (Fixes mobile & Google Pixel x-overflow)
+-------------------------------------------------------------------------- */
+.fp-hero-top-row {
+  display: flex;
+  justifyContent: space-between;
+  align-items: center;
+  width: 100%;
+  gap: 12px;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+}
+
+.fp-hero-time-wrapper {
+  margin-left: auto;
+  max-width: 100%;
+}
+
+.fp-nantes-timebox {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  max-width: 100%;
+  box-sizing: border-box;
+  padding: 4px 10px;
+  border: 2px solid var(--fp-border);
+  background: var(--fp-surface-2);
+  box-shadow: 3px 3px 0 var(--fp-shadow);
+  height: fit-content;
+}
+
+.fp-nantes-timebox--lg {
+  padding: 6px 14px;
+  gap: 10px;
+  box-shadow: 4px 4px 0 var(--fp-shadow);
+}
+
+.fp-nantes-timebox__location {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  color: var(--fp-text);
+  text-transform: uppercase;
+  flex-shrink: 0;
+  margin: 0;
+}
+
+.fp-nantes-timebox--lg .fp-nantes-timebox__location {
+  font-size: 12px;
+}
+
+.fp-nantes-timebox__divider {
+  color: var(--fp-border);
+  opacity: 0.4;
+  font-size: 12px;
+  flex-shrink: 0;
+}
+
+.fp-nantes-timebox__right {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.fp-nantes-timebox__time {
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 13px;
+  font-weight: 800;
+  color: var(--fp-primary);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.03em;
+  flex-shrink: 0;
+}
+
+.fp-nantes-timebox--lg .fp-nantes-timebox__time {
+  font-size: 15px;
+}
+
+.fp-nantes-timebox__tz {
+  font-size: 9px;
+  font-weight: 700;
+  color: var(--fp-text);
+  opacity: 0.8;
+}
+
+.fp-nantes-timebox__date {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 11px;
+  color: var(--fp-muted);
+  text-transform: uppercase;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  flex-shrink: 0;
+}
+
+.fp-nantes-timebox--lg .fp-nantes-timebox__date {
+  font-size: 12px;
+}
+
+/* Mobile responsive adjustments */
+@media (max-width: 640px) {
+  .fp-shell {
+    padding: 14px 10px !important;
+  }
+  .fp-panel {
+    padding: 16px 12px !important;
+  }
+  .fp-hero-top-row {
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 10px !important;
+    margin-bottom: 16px !important;
+  }
+  .fp-hero-time-wrapper {
+    margin-left: 0 !important;
+    width: 100% !important;
+  }
+  .fp-nantes-timebox {
+    display: flex !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    padding: 6px 10px !important;
+    box-sizing: border-box !important;
+    gap: 6px !important;
+  }
+  .fp-nantes-timebox--lg {
+    padding: 6px 10px !important;
+    box-shadow: 3px 3px 0 var(--fp-shadow) !important;
+  }
+  .fp-nantes-timebox__location {
+    font-size: 11px !important;
+  }
+  .fp-nantes-timebox__time {
+    font-size: 12px !important;
+  }
+  .fp-nantes-timebox__date {
+    font-size: 10px !important;
+  }
+  .fp-nantes-timebox__right {
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 6px !important;
+    margin-left: auto !important;
+  }
+}
+
+@media (max-width: 400px) {
+  .fp-nantes-timebox__country {
+    display: none !important;
+  }
+  .fp-nantes-timebox__divider {
+    display: none !important;
+  }
+  .fp-nantes-timebox__location {
+    font-size: 10px !important;
+  }
+  .fp-nantes-timebox__time {
+    font-size: 11px !important;
+  }
+  .fp-nantes-timebox__date {
+    font-size: 9px !important;
+  }
+}
+
 /* Responsive helper for ultra-narrow mobile viewports */
 @media (max-width: 480px) {
   .fp-hide-xs {
