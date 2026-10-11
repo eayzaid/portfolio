@@ -39,6 +39,16 @@ jobs:
       - name: Copy index.html to 404.html for SPA routing
         run: cp dist/index.html dist/404.html
 
+      - name: Deploy to eayzaid.github.io root
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          deploy_key: ${{ secrets.ACTIONS_DEPLOY_KEY }}
+          external_repository: eayzaid/eayzaid.github.io
+          publish_branch: main
+          publish_dir: ./dist
+          keep_files: false
+          force_orphan: true
+
       - name: Setup Pages
         uses: actions/configure-pages@v5
 

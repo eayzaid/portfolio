@@ -14,19 +14,8 @@ export const HeaderNav: React.FC<HeaderNavProps> = ({
   return (
     <header className="fp-nav">
       <Link to="/" className="fp-nav__brand">
-        <PixelIcon name="tree" size={20} />
         <span>zaidane.ayman</span>
       </Link>
-
-      <NavLink
-        to="/"
-        end
-        className={({ isActive }) =>
-          `fp-nav__cell ${isActive ? 'fp-nav__cell--active' : ''}`
-        }
-      >
-        Portfolio
-      </NavLink>
 
       <NavLink
         to="/blog"
@@ -38,26 +27,29 @@ export const HeaderNav: React.FC<HeaderNavProps> = ({
       </NavLink>
 
       <div className="fp-nav__cell" style={{ padding: '0 8px' }}>
-        <div className="fp-theme" role="group" aria-label="Theme switcher">
-          <button
-            type="button"
-            aria-label="Dark theme"
-            aria-pressed={theme === 'dark'}
-            onClick={() => onToggleTheme('dark')}
-            title="Dark theme"
-          >
-            <PixelIcon name="moon" size={14} />
-          </button>
-          <button
-            type="button"
-            aria-label="Light theme"
-            aria-pressed={theme === 'light'}
-            onClick={() => onToggleTheme('light')}
-            title="Light theme"
-          >
-            <PixelIcon name="sun" size={14} />
-          </button>
-        </div>
+        <button
+          type="button"
+          onClick={() => onToggleTheme(theme === 'dark' ? 'light' : 'dark')}
+          aria-label={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}
+          title={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}
+          style={{
+            display: 'inline-flex',
+            alignItems: 'center',
+            gap: '6px',
+            padding: '5px 10px',
+            background: 'var(--fp-surface-2)',
+            border: '2px solid var(--fp-border)',
+            color: 'var(--fp-text)',
+            cursor: 'pointer',
+            fontFamily: 'var(--fp-font-mono, monospace)',
+            fontSize: '11px',
+            fontWeight: 700,
+            boxShadow: '2px 2px 0 var(--fp-shadow)',
+          }}
+        >
+          <PixelIcon name={theme === 'dark' ? 'sun' : 'moon'} size={14} />
+          <span>{theme === 'dark' ? 'LIGHT' : 'DARK'}</span>
+        </button>
       </div>
     </header>
   );
