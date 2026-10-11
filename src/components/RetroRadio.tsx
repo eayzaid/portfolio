@@ -1,5 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useLanguage } from '../context/LanguageContext';
+import { useLofiPlayer } from '../hooks/useLofiPlayer';
+import { RetroEqualizerCanvas } from './RetroEqualizerCanvas';
 
 export type RadioStationId =
   | 'about'
@@ -19,19 +21,43 @@ export interface RadioStation {
   badge: string;
 }
 
-
 interface RetroRadioProps {
   activeStation: RadioStationId;
   onStationChange: (stationId: RadioStationId) => void;
 }
+
+const formatTime = (seconds: number): string => {
+  if (isNaN(seconds) || seconds < 0) return '00:00';
+  const m = Math.floor(seconds / 60);
+  const s = Math.floor(seconds % 60);
+  return `${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
+};
 
 export const RetroRadio: React.FC<RetroRadioProps> = ({
   activeStation,
   onStationChange,
 }) => {
   const { stations, language } = useLanguage();
-  const [audioEnabled, setAudioEnabled] = useState(false);
   const audioCtxRef = useRef<AudioContext | null>(null);
+
+  // Integrated LoFi Cassette Player Hook (starts paused / silent at first hand)
+  const {
+    currentTrack,
+    isPlaying,
+    currentTime,
+    duration,
+    progressPercent,
+    volume,
+    isMuted,
+    tracks,
+    analyser,
+    togglePlay,
+    nextTrack,
+    prevTrack,
+    seekByPercent,
+    setVolume,
+    toggleMute,
+  } = useLofiPlayer();
 
   // Current station index (0 to 5)
   const currentIndex = stations.findIndex((s) => s.id === activeStation);
@@ -89,7 +115,7 @@ export const RetroRadio: React.FC<RetroRadioProps> = ({
 
   // Synthesize short retro radio tuning blip
   const playTuningSound = () => {
-    if (!audioEnabled) return;
+    if (isMuted) return;
     try {
       const AudioCtx =
         window.AudioContext ||
@@ -108,7 +134,7 @@ export const RetroRadio: React.FC<RetroRadioProps> = ({
       osc.frequency.setValueAtTime(420 + currentIndex * 100, ctx.currentTime);
       osc.frequency.exponentialRampToValueAtTime(120, ctx.currentTime + 0.08);
 
-      gain.gain.setValueAtTime(0.12, ctx.currentTime);
+      gain.gain.setValueAtTime(0.12 * volume, ctx.currentTime);
       gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.08);
 
       osc.connect(gain);
@@ -149,6 +175,22 @@ export const RetroRadio: React.FC<RetroRadioProps> = ({
     }
   };
 
+  const handleVolumeWheel = (e: React.WheelEvent) => {
+    e.preventDefault();
+    if (e.deltaY < 0) {
+      setVolume(Math.min(1, Number((volume + 0.05).toFixed(2))));
+    } else {
+      setVolume(Math.max(0, Number((volume - 0.05).toFixed(2))));
+    }
+  };
+
+  const handleProgressBarClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    const clickX = e.clientX - rect.left;
+    const percent = (clickX / rect.width) * 100;
+    seekByPercent(percent);
+  };
+
   // Dial scale cursor position (percentage along 87.5 -> 108.5 scale)
   const minMhz = 87.5;
   const maxMhz = 108.5;
@@ -172,9 +214,9 @@ export const RetroRadio: React.FC<RetroRadioProps> = ({
         overflow: 'hidden',
       }}
       role="region"
-      aria-label="Stereo Dashboard Tuner"
+      aria-label="Stereo Dashboard Tuner & LoFi Cassette Player"
     >
-      {/* 1. Header Bezel Strip with Cassette Tape Flap */}
+      {/* 1. Header Bezel Strip with Cassette Tape Deck Controls */}
       <div
         style={{
           display: 'flex',
@@ -194,7 +236,13 @@ export const RetroRadio: React.FC<RetroRadioProps> = ({
         }}
       >
         <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-          <span className="fp-led" style={{ background: 'var(--fp-primary)', flexShrink: 0 }} />
+          <span
+            className={`fp-led ${isPlaying ? 'fp-led--pulsing' : ''}`}
+            style={{
+              background: isPlaying ? 'var(--fp-primary)' : 'var(--fp-muted)',
+              flexShrink: 0,
+            }}
+          />
           <span>STEREO RECEIVER CR-880</span>
         </div>
 
@@ -216,8 +264,11 @@ export const RetroRadio: React.FC<RetroRadioProps> = ({
           <span>►►</span>
         </div>
 
+        {/* Right audio indicators */}
         <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-          <span>FM STEREO</span>
+          <span style={{ color: isPlaying ? 'var(--fp-primary)' : 'inherit' }}>
+            {isPlaying ? 'LOFI TAPE' : 'FM STEREO'}
+          </span>
           <span style={{ color: 'var(--fp-border)', opacity: 0.4 }}>|</span>
           <span style={{ color: 'var(--fp-primary)' }}>DOLBY NR</span>
         </div>
@@ -379,7 +430,7 @@ export const RetroRadio: React.FC<RetroRadioProps> = ({
           </div>
         </div>
 
-        {/* === CENTER DIGITAL TUNER SCREEN (Submits to webpage Forest Pixel UI theme) === */}
+        {/* === CENTER DIGITAL TUNER SCREEN === */}
         <div
           className="fp-radio-screen"
           style={{
@@ -463,7 +514,7 @@ export const RetroRadio: React.FC<RetroRadioProps> = ({
             </div>
           </div>
 
-          {/* Main LCD Digital Readout matching reference style */}
+          {/* Station Readout & Live Clock Row */}
           <div
             style={{
               display: 'flex',
@@ -479,7 +530,7 @@ export const RetroRadio: React.FC<RetroRadioProps> = ({
               <span
                 style={{
                   fontFamily: 'JetBrains Mono, monospace',
-                  fontSize: 'clamp(1.2rem, 3.2vw, 1.75rem)',
+                  fontSize: 'clamp(1.15rem, 3vw, 1.55rem)',
                   fontWeight: 800,
                   color: 'var(--fp-primary)',
                   letterSpacing: '0.05em',
@@ -493,7 +544,7 @@ export const RetroRadio: React.FC<RetroRadioProps> = ({
                 <span
                   style={{
                     fontFamily: 'JetBrains Mono, monospace',
-                    fontSize: 'clamp(11px, 2.2vw, 14px)',
+                    fontSize: 'clamp(11px, 2.2vw, 13px)',
                     fontWeight: 700,
                     color: 'var(--fp-text)',
                     letterSpacing: '.06em',
@@ -504,7 +555,7 @@ export const RetroRadio: React.FC<RetroRadioProps> = ({
                 </span>
                 <span
                   style={{
-                    fontSize: '9px',
+                    fontSize: '8px',
                     fontFamily: 'JetBrains Mono, monospace',
                     color: 'var(--fp-muted)',
                   }}
@@ -520,7 +571,7 @@ export const RetroRadio: React.FC<RetroRadioProps> = ({
                 display: 'flex',
                 flexDirection: 'column',
                 alignItems: 'flex-end',
-                gap: '4px',
+                gap: '2px',
                 marginLeft: 'auto',
                 minWidth: 0,
               }}
@@ -574,11 +625,10 @@ export const RetroRadio: React.FC<RetroRadioProps> = ({
                   gap: '4px',
                 }}
               >
-
                 <span
                   style={{
                     fontFamily: 'JetBrains Mono, monospace',
-                    fontSize: 'clamp(1.15rem, 2.6vw, 1.55rem)',
+                    fontSize: 'clamp(1rem, 2.4vw, 1.35rem)',
                     fontWeight: 800,
                     color: 'var(--fp-primary)',
                     letterSpacing: '0.04em',
@@ -602,6 +652,172 @@ export const RetroRadio: React.FC<RetroRadioProps> = ({
             </div>
           </div>
 
+          {/* === LOFI CASSETTE NOW PLAYING & PLAYBACK LCD SUB-PANEL === */}
+          <div
+            style={{
+              background: 'var(--fp-surface)',
+              border: '1px solid var(--fp-border)',
+              padding: '6px 8px',
+              display: 'flex',
+              flexDirection: 'column',
+              gap: '5px',
+              zIndex: 2,
+            }}
+          >
+            {/* Top row: Track Title & Status */}
+            <div
+              style={{
+                display: 'flex',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+                gap: '8px',
+                flexWrap: 'wrap',
+                fontFamily: 'JetBrains Mono, monospace',
+              }}
+            >
+              <div style={{ display: 'flex', alignItems: 'center', gap: '6px', minWidth: 0 }}>
+                <span
+                  style={{
+                    fontSize: '11px',
+                    color: isPlaying ? 'var(--fp-primary)' : 'var(--fp-muted)',
+                  }}
+                >
+                  ♫
+                </span>
+                <span
+                  style={{
+                    fontSize: '9px',
+                    fontWeight: 800,
+                    letterSpacing: '.06em',
+                    color: 'var(--fp-text)',
+                    whiteSpace: 'nowrap',
+                    overflow: 'hidden',
+                    textOverflow: 'ellipsis',
+                  }}
+                >
+                  TRK {currentTrack.trackNumber}/{tracks.length}: {currentTrack.title.toUpperCase()}
+                </span>
+                <span
+                  style={{
+                    fontSize: '8px',
+                    color: 'var(--fp-muted)',
+                    whiteSpace: 'nowrap',
+                  }}
+                >
+                  [{currentTrack.category.toUpperCase()}]
+                </span>
+              </div>
+
+              {/* Status Indicator Pill */}
+              <div style={{ display: 'flex', alignItems: 'center', gap: '6px', marginLeft: 'auto' }}>
+                <span
+                  style={{
+                    fontSize: '8px',
+                    fontFamily: 'JetBrains Mono, monospace',
+                    fontWeight: 700,
+                    color: isPlaying ? 'var(--fp-primary)' : 'var(--fp-muted)',
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: '4px',
+                  }}
+                >
+                  <span
+                    className={`fp-led ${isPlaying ? 'fp-led--pulsing' : ''}`}
+                    style={{
+                      width: '5px',
+                      height: '5px',
+                      background: isPlaying ? 'var(--fp-primary)' : 'var(--fp-muted)',
+                    }}
+                  />
+                  {isPlaying ? 'PLAYING' : 'PAUSED'}
+                </span>
+              </div>
+            </div>
+
+            {/* Middle row: Interactive Retro Cassette Progress Bar */}
+            <div
+              onClick={handleProgressBarClick}
+              role="slider"
+              tabIndex={0}
+              aria-label="Track Progress Seek"
+              aria-valuemin={0}
+              aria-valuemax={100}
+              aria-valuenow={Math.round(progressPercent)}
+              onKeyDown={(e) => {
+                if (e.key === 'ArrowRight') {
+                  seekByPercent(progressPercent + 5);
+                } else if (e.key === 'ArrowLeft') {
+                  seekByPercent(progressPercent - 5);
+                }
+              }}
+              title="Click or drag to seek in track"
+              style={{
+                width: '100%',
+                height: '7px',
+                background: 'var(--fp-surface-2)',
+                border: '1px solid var(--fp-border)',
+                cursor: 'pointer',
+                position: 'relative',
+                boxShadow: 'inset 1px 1px 2px rgba(0,0,0,0.1)',
+              }}
+            >
+              {/* Filled Ribbon */}
+              <div
+                style={{
+                  height: '100%',
+                  width: `${progressPercent}%`,
+                  background: isPlaying ? 'var(--fp-primary)' : 'var(--fp-muted)',
+                  transition: 'width 0.12s linear',
+                }}
+              />
+              {/* Playhead Marker */}
+              <div
+                style={{
+                  position: 'absolute',
+                  top: '-2px',
+                  left: `${progressPercent}%`,
+                  transform: 'translateX(-50%)',
+                  width: '3px',
+                  height: '9px',
+                  background: 'var(--fp-text)',
+                  border: '1px solid var(--fp-border)',
+                }}
+              />
+            </div>
+
+            {/* Bottom row: Time Readout & Animated 8-bit Equalizer Bars */}
+            <div
+              style={{
+                display: 'flex',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+                fontSize: '8px',
+                fontFamily: 'JetBrains Mono, monospace',
+                color: 'var(--fp-muted)',
+              }}
+            >
+              {/* Elapsed / Total duration */}
+              <div style={{ display: 'flex', gap: '4px', alignItems: 'center' }}>
+                <span
+                  style={{
+                    color: 'var(--fp-text)',
+                    fontWeight: 700,
+                    fontVariantNumeric: 'tabular-nums',
+                  }}
+                >
+                  {formatTime(currentTime)}
+                </span>
+                <span>/</span>
+                <span style={{ fontVariantNumeric: 'tabular-nums' }}>
+                  {formatTime(duration)}
+                </span>
+              </div>
+
+              {/* Live Web Audio Responsive Equalizer Spectrum */}
+              <RetroEqualizerCanvas analyser={analyser} isPlaying={isPlaying} />
+            </div>
+          </div>
+
           {/* Status Indicators Strip */}
           <div
             style={{
@@ -618,17 +834,21 @@ export const RetroRadio: React.FC<RetroRadioProps> = ({
           >
             <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
               <span style={{ color: 'var(--fp-danger)', fontWeight: 800 }}>● REC</span>
-              <span style={{ color: 'var(--fp-primary)', fontWeight: 600 }}>TUNED: OK</span>
+              <span style={{ color: 'var(--fp-primary)', fontWeight: 600 }}>
+                {isPlaying ? 'LOFI: PLAYING' : 'TUNED: OK'}
+              </span>
               <span>HI-FI STEREO</span>
             </div>
             <div style={{ display: 'flex', alignItems: 'center', gap: '3px' }}>
               <span>SIG:</span>
-              <span style={{ color: 'var(--fp-primary)', fontWeight: 700 }}> ▂▄▅█</span>
+              <span style={{ color: 'var(--fp-primary)', fontWeight: 700 }}>
+                {isPlaying ? ' ▂▄▅██' : ' ▂▄▅█'}
+              </span>
             </div>
           </div>
         </div>
 
-        {/* === RIGHT CONTROL KNOB (Sound FX / Vol Toggle) === */}
+        {/* === RIGHT CONTROL KNOB (Master Volume & Mute) === */}
         <div
           style={{
             display: 'flex',
@@ -649,41 +869,166 @@ export const RetroRadio: React.FC<RetroRadioProps> = ({
               textTransform: 'uppercase',
             }}
           >
-            SOUND FX
+            MASTER VOL
           </div>
 
+          {/* Rotary Volume / Mute Knob */}
           <button
             type="button"
-            onClick={() => setAudioEnabled((prev) => !prev)}
-            title={audioEnabled ? 'Audio Click: ON (Click to Mute)' : 'Audio Click: Muted (Click to Enable Sound)'}
-            aria-pressed={audioEnabled}
+            onClick={toggleMute}
+            onWheel={handleVolumeWheel}
+            title={
+              isMuted
+                ? 'Master Muted: Click to Unmute, scroll to adjust volume'
+                : `Volume: ${Math.round(volume * 100)}% (Click to Mute, scroll to adjust)`
+            }
+            aria-pressed={!isMuted}
             style={{
               width: '46px',
               height: '46px',
               borderRadius: '50%',
-              background: audioEnabled
+              background: !isMuted
                 ? 'var(--fp-primary)'
                 : 'linear-gradient(135deg, var(--fp-surface-2) 0%, var(--fp-surface) 100%)',
-              color: audioEnabled ? 'var(--fp-on-primary)' : 'var(--fp-text)',
+              color: !isMuted ? 'var(--fp-on-primary)' : 'var(--fp-text)',
               border: '2px solid var(--fp-border)',
               boxShadow: '2px 2px 0 var(--fp-shadow)',
               display: 'grid',
               placeItems: 'center',
               cursor: 'pointer',
-              fontSize: '11px',
+              fontSize: '10px',
               fontWeight: 700,
+              fontFamily: 'JetBrains Mono, monospace',
             }}
           >
-            {audioEnabled ? 'VOL' : 'MUTE'}
+            {isMuted ? 'MUTE' : `${Math.round(volume * 100)}%`}
           </button>
 
+          {/* Volume Stepper micro buttons [-] [+] */}
+          <div style={{ display: 'flex', gap: '2px' }}>
+            <button
+              type="button"
+              onClick={() => setVolume(Math.max(0, Number((volume - 0.1).toFixed(2))))}
+              title="Lower Volume"
+              aria-label="Lower Volume"
+              style={{
+                width: '18px',
+                height: '16px',
+                fontSize: '9px',
+                padding: 0,
+                background: 'var(--fp-surface)',
+                border: '1px solid var(--fp-border)',
+                color: 'var(--fp-text)',
+                cursor: 'pointer',
+                fontFamily: 'JetBrains Mono, monospace',
+                fontWeight: 700,
+              }}
+            >
+              -
+            </button>
+            <button
+              type="button"
+              onClick={() => setVolume(Math.min(1, Number((volume + 0.1).toFixed(2))))}
+              title="Increase Volume"
+              aria-label="Increase Volume"
+              style={{
+                width: '18px',
+                height: '16px',
+                fontSize: '9px',
+                padding: 0,
+                background: 'var(--fp-surface)',
+                border: '1px solid var(--fp-border)',
+                color: 'var(--fp-text)',
+                cursor: 'pointer',
+                fontFamily: 'JetBrains Mono, monospace',
+                fontWeight: 700,
+              }}
+            >
+              +
+            </button>
+          </div>
+
           <span
-            className="fp-led"
+            className={`fp-led ${!isMuted && isPlaying ? 'fp-led--pulsing' : ''}`}
             style={{
-              background: audioEnabled ? 'var(--fp-primary)' : 'var(--fp-muted)',
-              opacity: audioEnabled ? 1 : 0.4,
+              background: !isMuted ? 'var(--fp-primary)' : 'var(--fp-muted)',
+              opacity: !isMuted ? 1 : 0.4,
             }}
           />
+        </div>
+      </div>
+
+      {/* 2.5. Dedicated Cassette Transport Deck (Positioned between Screen and Section Buttons) */}
+      <div
+        className="fp-cassette-deck-bar"
+        style={{
+          marginTop: '12px',
+          padding: '10px 14px',
+          background: 'var(--fp-surface-2)',
+          border: '2px solid var(--fp-border)',
+          boxShadow: 'inset 1px 1px 2px rgba(0,0,0,0.06), 2px 2px 0 var(--fp-shadow)',
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          gap: '12px',
+        }}
+        role="toolbar"
+        aria-label="Lo-Fi Cassette Player Controls"
+      >
+        {/* Tactile Transport Buttons Centered */}
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '10px', flexWrap: 'wrap' }}>
+          {/* Previous Track / Rewind */}
+          <button
+            type="button"
+            onClick={prevTrack}
+            className="fp-cassette-deck-btn"
+            title="Previous Track"
+            aria-label="Previous Track"
+            style={{ padding: '8px 18px' }}
+          >
+            <span style={{ fontSize: '13px' }}>◄◄</span>
+            <span style={{ fontSize: '11px', fontWeight: 800 }}>PREV</span>
+          </button>
+
+          {/* Main Play / Pause Button - Larger & Prominent */}
+          <button
+            type="button"
+            onClick={togglePlay}
+            className={`fp-cassette-deck-btn ${isPlaying ? 'fp-cassette-deck-btn--active' : ''}`}
+            title={isPlaying ? 'Pause LoFi Music' : 'Play LoFi Music'}
+            aria-label={isPlaying ? 'Pause Music' : 'Play Music'}
+            aria-pressed={isPlaying}
+            style={{
+              padding: '8px 26px',
+              fontSize: '12px',
+              minWidth: '128px',
+              gap: '8px',
+            }}
+          >
+            <span style={{ fontSize: '14px' }}>{isPlaying ? '❚❚' : '▶'}</span>
+            <span style={{ fontWeight: 800 }}>{isPlaying ? 'PAUSE' : 'PLAY'}</span>
+            <span
+              className={`fp-led ${isPlaying ? 'fp-led--pulsing' : ''}`}
+              style={{
+                width: '6px',
+                height: '6px',
+                background: isPlaying ? '#ffffff' : 'var(--fp-muted)',
+              }}
+            />
+          </button>
+
+          {/* Next Track / Fast Forward */}
+          <button
+            type="button"
+            onClick={nextTrack}
+            className="fp-cassette-deck-btn"
+            title="Next Track"
+            aria-label="Next Track"
+            style={{ padding: '8px 18px' }}
+          >
+            <span style={{ fontSize: '11px', fontWeight: 800 }}>NEXT</span>
+            <span style={{ fontSize: '13px' }}>►►</span>
+          </button>
         </div>
       </div>
 

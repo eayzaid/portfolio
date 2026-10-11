@@ -41,7 +41,18 @@
   },
   "radio": {
     "tuningStation": "SYNTONISATION DE LA STATION...",
-    "scrollToTop": "Haut de page"
+    "scrollToTop": "Haut de page",
+    "cassette": "AUTO REVERSE // CASSETTE",
+    "nowPlaying": "LECTURE EN COURS",
+    "track": "PISTE",
+    "side": "FACE",
+    "play": "Lecture",
+    "pause": "Pause",
+    "prevTrack": "Piste précédente",
+    "nextTrack": "Piste suivante",
+    "autoReverse": "AUTO REVERSE",
+    "vol": "VOLUME",
+    "mute": "MUET"
   },
   "hero": {
     "specsTitle": "Spécifications du stage",

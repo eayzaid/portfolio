@@ -330,3 +330,95 @@ a  { color: inherit; text-underline-offset: 3px; text-decoration-thickness: 2px;
 @media (prefers-reduced-motion: reduce) {
   .fp-btn, .fp-blink { transition: none; animation: none; }
 }
+
+/* ---------- 13. LoFi Cassette Player Keyframes & Utilities ---------------- */
+@keyframes fp-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes fp-pulse-led {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.35; transform: scale(0.92); }
+}
+
+@keyframes fp-eq-1 { 0%, 100% { height: 3px; } 50% { height: 12px; } }
+@keyframes fp-eq-2 { 0%, 100% { height: 10px; } 50% { height: 4px; } }
+@keyframes fp-eq-3 { 0%, 100% { height: 6px; } 50% { height: 14px; } }
+@keyframes fp-eq-4 { 0%, 100% { height: 13px; } 50% { height: 5px; } }
+@keyframes fp-eq-5 { 0%, 100% { height: 4px; } 50% { height: 11px; } }
+
+.fp-cassette-reel--spinning {
+  animation: fp-spin 2.4s linear infinite;
+}
+
+.fp-cassette-btn {
+  background: var(--fp-surface);
+  border: 1px solid var(--fp-border);
+  color: var(--fp-text);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px;
+  font-weight: 700;
+  cursor: pointer;
+  padding: 2px 6px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  user-select: none;
+  transition: background 0.1s, transform 0.05s;
+}
+
+.fp-cassette-btn:hover {
+  background: var(--fp-surface-2);
+}
+
+.fp-cassette-btn:active {
+  transform: translate(1px, 1px);
+}
+
+.fp-cassette-btn--active {
+  background: var(--fp-primary) !important;
+  color: var(--fp-on-primary) !important;
+}
+
+.fp-led--pulsing {
+  animation: fp-pulse-led 1.2s ease-in-out infinite;
+}
+
+.fp-cassette-deck-btn {
+  background: var(--fp-surface);
+  border: 2px solid var(--fp-border);
+  box-shadow: 2px 2px 0 var(--fp-shadow);
+  color: var(--fp-text);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  font-weight: 800;
+  cursor: pointer;
+  padding: 6px 14px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  user-select: none;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  transition: transform 0.08s steps(2), box-shadow 0.08s steps(2), background 0.1s;
+}
+
+.fp-cassette-deck-btn:hover {
+  background: var(--fp-surface-2);
+}
+
+.fp-cassette-deck-btn:active {
+  transform: translate(2px, 2px);
+  box-shadow: none;
+}
+
+.fp-cassette-deck-btn--active {
+  background: var(--fp-primary) !important;
+  color: var(--fp-on-primary) !important;
+  box-shadow: 1px 1px 0 var(--fp-shadow);
+}
+
+

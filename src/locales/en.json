@@ -41,7 +41,18 @@
   },
   "radio": {
     "tuningStation": "TUNING STATION FREQUENCY...",
-    "scrollToTop": "Scroll To Top"
+    "scrollToTop": "Scroll To Top",
+    "cassette": "AUTO REVERSE // CASSETTE",
+    "nowPlaying": "NOW PLAYING",
+    "track": "TRACK",
+    "side": "SIDE",
+    "play": "Play",
+    "pause": "Pause",
+    "prevTrack": "Previous Track",
+    "nextTrack": "Next Track",
+    "autoReverse": "AUTO REVERSE",
+    "vol": "VOLUME",
+    "mute": "MUTE"
   },
   "hero": {
     "specsTitle": "Internship Specifications",
