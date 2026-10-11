@@ -1,0 +1,135 @@
+@import './styles/forest-pixel.css';
+
+/* Custom application enhancements keeping strict 8-bit neo-brutalist discipline */
+
+html, body {
+  min-height: 100%;
+}
+
+html {
+  overflow-y: scroll;
+  scrollbar-gutter: stable;
+}
+
+#root {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.fp-shell {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+#main-active-card,
+.fp-panel {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* Nav cell active state underline / highlight */
+.fp-nav__cell--active {
+  background: var(--fp-surface-2);
+  border-bottom: 3px solid var(--fp-primary);
+}
+
+/* Smooth tab focus */
+.fp-tab:focus-visible {
+  outline: 2px solid var(--fp-primary);
+  outline-offset: 2px;
+}
+
+/* Prevent accidental horizontal overflow globally */
+body {
+  overflow-x: hidden;
+}
+
+/* Responsive helper for ultra-narrow mobile viewports */
+@media (max-width: 480px) {
+  .fp-hide-xs {
+    display: none !important;
+  }
+}
+
+/* Hero section portrait responsive alignment: right-aligned on desktop, centered on mobile */
+.fp-hero-portrait-col {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+  max-width: 350px;
+  margin-left: auto;
+  margin-right: 0;
+  align-items: flex-end;
+}
+
+.fp-hero-contact-row {
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+  align-items: center;
+  width: 100%;
+  margin-top: 4px;
+}
+
+@media (max-width: 768px) {
+  .fp-hero-portrait-col {
+    margin-left: auto;
+    margin-right: auto;
+    align-items: center;
+  }
+
+  .fp-hero-contact-row {
+    justify-content: center;
+  }
+}
+
+/* Retro Radio Dashboard Tuner theme-adaptive screen styles */
+.fp-radio-screen {
+  background: var(--fp-surface-2) !important;
+  color: var(--fp-text) !important;
+  border: 2px solid var(--fp-border) !important;
+  box-shadow: inset 2px 2px 4px rgba(0, 0, 0, 0.08), 2px 2px 0 var(--fp-shadow) !important;
+}
+
+:root[data-theme="dark"] .fp-radio-screen,
+:root:not([data-theme="light"]) .fp-radio-screen {
+  background: #171d20 !important;
+  box-shadow: inset 2px 2px 4px rgba(0, 0, 0, 0.4), 2px 2px 0 var(--fp-shadow) !important;
+}
+
+@media (max-width: 600px) {
+  .fp-radio-main-grid {
+    grid-template-columns: auto 1fr !important;
+    gap: 10px !important;
+  }
+  .fp-radio-vol-col {
+    display: none !important;
+  }
+  .fp-radio-buttons-grid {
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 6px !important;
+  }
+  .fp-radio-preset-btn {
+    padding: 6px 4px !important;
+    font-size: 10px !important;
+  }
+}
+
+@media (max-width: 440px) {
+  .fp-radio-unit {
+    padding: 8px 10px !important;
+  }
+  .fp-radio-buttons-grid {
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 4px !important;
+  }
+  .fp-radio-preset-btn {
+    font-size: 9px !important;
+    padding: 5px 2px !important;
+  }
+}
+
+

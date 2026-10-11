@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>pixel.grove — starter</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<!-- Deliverable? Inline forest-pixel.css here in a <style> block instead of linking it. -->
+<link rel="stylesheet" href="forest-pixel.css">
+<script>
+  /* Apply a saved theme before first paint to avoid a light flash. */
+  (function () { try { var t = localStorage.getItem('fp-theme'); if (t) document.documentElement.dataset.theme = t; } catch (e) {} })();
+</script>
+</head>
+<body>
+<div class="fp-shell">
+
+  <!-- NAV: bordered cells, brand on the left -->
+  <header class="fp-nav">
+    <a class="fp-nav__brand" href="#"><span data-icon="tree" data-size="24"></span> pixel.grove</a>
+    <a class="fp-nav__cell fp-nav__cell--hide-sm" href="#">About</a>
+    <a class="fp-nav__cell fp-nav__cell--hide-sm" href="#">Recent</a>
+    <a class="fp-nav__cell fp-nav__cell--hide-sm" href="#">FAQ</a>
+    <a class="fp-nav__cell fp-nav__cell--strong" href="#">My account</a>
+    <div class="fp-nav__cell" style="padding: 0 12px;">
+      <div class="fp-theme" role="group" aria-label="Theme">
+        <button type="button" data-set-theme="dark"  aria-label="Dark theme"  aria-pressed="false"><span data-icon="moon" data-size="18"></span></button>
+        <button type="button" data-set-theme="light" aria-label="Light theme" aria-pressed="true"><span data-icon="sun" data-size="18"></span></button>
+      </div>
+    </div>
+  </header>
+
+  <!-- TICKER: the one loud strip on the page -->
+  <div class="fp-ticker">01:04:15:59 since the last harvest <span class="fp-blink">▌</span></div>
+
+  <main style="margin-top: 24px;">
+
+    <!-- STATS: three cells with hard dividers -->
+    <section class="fp-stats" aria-label="Summary">
+      <div class="fp-stat">
+        <div class="fp-label"><span data-icon="tree"></span> Active seeds</div>
+        <div class="fp-stat__value">$0</div>
+      </div>
+      <div class="fp-stat">
+        <div class="fp-label"><span data-icon="coin"></span> Pool remaining</div>
+        <div class="fp-stat__value">$100,000,000</div>
+      </div>
+      <div class="fp-stat">
+        <div class="fp-label"><span data-icon="trophy"></span> Total earnings</div>
+        <div class="fp-stat__value">$0</div>
+        <button class="fp-btn fp-btn--icon fp-btn--ghost fp-stat__action" aria-label="Share"><span data-icon="star"></span></button>
+      </div>
+    </section>
+
+    <!-- TABS + PANEL with graph-paper empty state -->
+    <div class="fp-tabs" role="tablist">
+      <button class="fp-tab" role="tab" aria-selected="true">Active deposits</button>
+      <button class="fp-tab" role="tab" aria-selected="false">Transaction history <span class="fp-led" aria-hidden="true"></span></button>
+    </div>
+    <section class="fp-panel fp-gridpaper" role="tabpanel">
+      <div class="fp-empty">
+        <span data-icon="coin" data-size="40"></span>
+        <div>You don't have deposits now</div>
+        <button class="fp-btn fp-btn--primary" data-open-modal>Deposit</button>
+      </div>
+    </section>
+
+    <!-- COMPONENT SAMPLER (delete what you don't need) -->
+    <h2 style="margin-top: 48px;">Component sampler</h2>
+    <div style="display: grid; gap: 24px; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));">
+      <div class="fp-card">
+        <h3>Buttons &amp; badges</h3>
+        <p style="display:flex; gap:12px; flex-wrap:wrap;">
+          <button class="fp-btn fp-btn--primary">Plant</button>
+          <button class="fp-btn">Cancel</button>
+          <button class="fp-btn fp-btn--danger">Remove</button>
+          <button class="fp-btn" disabled>Locked</button>
+        </p>
+        <p style="display:flex; gap:8px; flex-wrap:wrap;">
+          <span class="fp-badge fp-badge--ok">Active</span>
+          <span class="fp-badge fp-badge--warn">Pending</span>
+          <span class="fp-badge fp-badge--danger">Blocked</span>
+          <span class="fp-badge">Draft</span>
+        </p>
+        <div class="fp-label" style="margin-bottom:6px;">Growth 70%</div>
+        <div class="fp-progress"><div class="fp-progress__bar" style="--v:70%"></div></div>
+      </div>
+      <div class="fp-card">
+        <h3>Form</h3>
+        <div class="fp-field"><label class="fp-label" for="n">Name</label><input id="n" class="fp-input" placeholder="Player one"></div>
+        <div class="fp-field"><label class="fp-label" for="r">Role</label>
+          <select id="r" class="fp-select"><option>Member</option><option>Leader</option></select></div>
+        <button class="fp-btn fp-btn--primary">Save</button>
+      </div>
+    </div>
+
+    <div class="fp-table-wrap" style="margin-top: 24px;">
+      <table class="fp-table">
+        <thead><tr><th>Member</th><th>Role</th><th>Status</th><th class="fp-num">Score</th></tr></thead>
+        <tbody>
+          <tr><td>Sara B.</td><td>Leader</td><td><span class="fp-badge fp-badge--ok">Active</span></td><td class="fp-num">1,240</td></tr>
+          <tr><td>Omar K.</td><td>Member</td><td><span class="fp-badge fp-badge--warn">Pending</span></td><td class="fp-num">310</td></tr>
+          <tr><td>Lina R.</td><td>Member</td><td><span class="fp-badge fp-badge--danger">Blocked</span></td><td class="fp-num">0</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </main>
+</div>
+
+<dialog class="fp-modal" id="modal">
+  <h3>New deposit</h3>
+  <p>Hard edges, hard shadow, no blur anywhere.</p>
+  <form method="dialog" style="display:flex; gap:12px;">
+    <button class="fp-btn fp-btn--primary" value="ok">Confirm</button>
+    <button class="fp-btn" value="cancel">Close</button>
+  </form>
+</dialog>
+
+<script>
+  /* ---- Pixel icons: ASCII grid -> crisp SVG rects. '#' = filled pixel. ---- */
+  const ICONS = {
+    tree:   ['...##...','..####..','.######.','..####..','.######.','########','...##...','...##...'],
+    coin:   ['..####..','.######.','###..###','##.##.##','##.##.##','###..###','.######.','..####..'],
+    trophy: ['########','#.####.#','#.####.#','.######.','..####..','...##...','..####..','.######.'],
+    star:   ['...##...','...##...','########','.######.','..####..','.##..##.','.#....#.','........'],
+    heart:  ['.##..##.','########','########','########','.######.','..####..','...##...','........'],
+    leaf:   ['......##','....####','..######','.#######','.######.','##.###..','#..##...','...#....'],
+    moon:   ['..####..','.###....','###.....','###.....','###.....','.###..#.','..####..','........'],
+    sun:    ['....#....','.#..#..#.','..#####..','...###...','##.###.##','...###...','..#####..','.#..#..#.','....#....']
+  };
+  function pixelIcon(name, size) {
+    const rows = ICONS[name], h = rows.length, w = rows[0].length; let r = '';
+    rows.forEach((row, y) => [...row].forEach((c, x) => { if (c === '#') r += `<rect x="${x}" y="${y}" width="1" height="1"/>`; }));
+    return `<svg class="fp-icon" width="${size}" height="${size}" viewBox="0 0 ${w} ${h}" shape-rendering="crispEdges" fill="currentColor" aria-hidden="true">${r}</svg>`;
+  }
+  document.querySelectorAll('[data-icon]').forEach(el => { el.innerHTML = pixelIcon(el.dataset.icon, +el.dataset.size || 16); });
+
+  /* ---- Theme toggle: saved choice > OS preference. localStorage is best-effort. ---- */
+  const root = document.documentElement;
+  const isDark = () => root.dataset.theme ? root.dataset.theme === 'dark' : matchMedia('(prefers-color-scheme: dark)').matches;
+  function syncToggle() { document.querySelectorAll('[data-set-theme]').forEach(b => b.setAttribute('aria-pressed', String((b.dataset.setTheme === 'dark') === isDark()))); }
+  document.querySelectorAll('[data-set-theme]').forEach(b => b.addEventListener('click', () => {
+    root.dataset.theme = b.dataset.setTheme;
+    try { localStorage.setItem('fp-theme', b.dataset.setTheme); } catch (e) {}
+    syncToggle();
+  }));
+  syncToggle();
+
+  /* ---- Tabs + modal ---- */
+  document.querySelectorAll('.fp-tab').forEach(t => t.addEventListener('click', () => {
+    document.querySelectorAll('.fp-tab').forEach(o => o.setAttribute('aria-selected', String(o === t)));
+  }));
+  const modal = document.getElementById('modal');
+  document.querySelectorAll('[data-open-modal]').forEach(b => b.addEventListener('click', () => modal.showModal()));
+</script>
+</body>
+</html>

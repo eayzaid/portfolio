@@ -1,0 +1,117 @@
+/* ==========================================================================
+   @8bitcn/select styles adapted for Forest Pixel UI
+   ========================================================================== */
+
+.fp-8bit-select-trigger {
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  background: var(--fp-surface);
+  color: var(--fp-text);
+  border: 2px solid var(--fp-border);
+  box-shadow: 2px 2px 0 var(--fp-shadow);
+  padding: 3px 8px;
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .05em;
+  text-transform: uppercase;
+  cursor: pointer;
+  outline: none;
+  transition: transform 60ms steps(2, jump-none), box-shadow 60ms steps(2, jump-none);
+  user-select: none;
+}
+
+.fp-8bit-select-trigger:hover {
+  transform: translate(-1px, -1px);
+  box-shadow: 3px 3px 0 var(--fp-shadow);
+  background: var(--fp-surface-2);
+}
+
+.fp-8bit-select-trigger:active,
+.fp-8bit-select-trigger[data-state="open"] {
+  transform: translate(1px, 1px);
+  box-shadow: 1px 1px 0 var(--fp-shadow);
+}
+
+.fp-8bit-select-trigger:focus-visible {
+  outline: 2px solid var(--fp-primary);
+  outline-offset: 1px;
+}
+
+.fp-8bit-select-value {
+  display: inline-block;
+  white-space: nowrap;
+}
+
+.fp-8bit-select-icon {
+  font-size: 9px;
+  margin-left: 4px;
+  color: var(--fp-primary);
+  line-height: 1;
+}
+
+@keyframes fp-8bit-pop {
+  from {
+    transform: translateY(-2px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.fp-8bit-select-content {
+  background: var(--fp-surface);
+  color: var(--fp-text);
+  border: 2px solid var(--fp-border);
+  box-shadow: 4px 4px 0 var(--fp-shadow);
+  padding: 4px;
+  min-width: 140px;
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-size: 11px;
+  z-index: 9999;
+  box-sizing: border-box;
+  animation: fp-8bit-pop 60ms steps(2, jump-none);
+}
+
+.fp-8bit-select-viewport {
+  padding: 2px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.fp-8bit-select-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 6px 8px;
+  cursor: pointer;
+  outline: none;
+  font-weight: 600;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+  user-select: none;
+  border: 1px solid transparent;
+  color: var(--fp-text);
+}
+
+.fp-8bit-select-item[data-highlighted],
+.fp-8bit-select-item:hover {
+  background: var(--fp-primary);
+  color: var(--fp-on-primary);
+  border-color: var(--fp-border);
+}
+
+.fp-8bit-select-item[data-state="checked"] {
+  font-weight: 700;
+}
+
+.fp-8bit-select-indicator {
+  font-size: 11px;
+  font-weight: 700;
+  margin-left: 8px;
+}
