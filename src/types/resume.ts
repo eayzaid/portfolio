@@ -3,10 +3,8 @@ export interface EducationItem {
   location: string;
   degree: string;
   period: string;
-  status?: string;
   badge?: string;
   equivalence?: string;
-  highlights?: string[];
 }
 
 export interface ExperienceItem {
@@ -27,16 +25,12 @@ export interface ProjectItem {
   period?: string;
   technologies: string[];
   description: string;
-  impactMetrics?: string;
   repoUrl?: string;
-  demoUrl?: string;
-  featured?: boolean;
 }
 
 export interface SkillCategory {
   category: string;
   skills: string[];
-  icon?: string;
 }
 
 export interface HonorAward {
@@ -44,7 +38,6 @@ export interface HonorAward {
   organization: string;
   year: string;
   ranking: string;
-  icon: string;
 }
 
 export interface LeadershipItem {
@@ -58,7 +51,6 @@ export interface LeadershipItem {
 export interface CertificationItem {
   title: string;
   issuer: string;
-  icon?: string;
   imageUrl?: string;
   credentialUrl?: string;
 }
@@ -66,5 +58,4 @@ export interface CertificationItem {
 export interface LanguageItem {
   language: string;
   proficiency: string;
-  level: string;
 }

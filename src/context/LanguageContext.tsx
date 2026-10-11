@@ -19,17 +19,13 @@ export interface LocalizedResumeData {
   personal: {
     name: string;
     role: string;
-    subheading: string;
     statusBadge: string;
     email: string;
     phone: string;
     resumePdf: string;
     location: string;
     linkedin: string;
-    linkedinUsername: string;
     github: string;
-    githubUsername: string;
-    summary: string;
     internshipGoal: {
       duration: string;
       startDate: string;
@@ -37,7 +33,6 @@ export interface LocalizedResumeData {
       locations: string;
     };
   };
-  stats: Array<{ label: string; value: string; icon: string }>;
   education: EducationItem[];
   experience: ExperienceItem[];
   projects: ProjectItem[];
@@ -137,7 +132,6 @@ export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ chil
         ...raw.personal,
         resumePdf: withBase(raw.personal.resumePdf),
       },
-      stats: raw.stats,
       education: raw.education,
       experience: raw.experience,
       projects: raw.projects,
