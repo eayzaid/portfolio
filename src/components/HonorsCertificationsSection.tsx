@@ -114,6 +114,7 @@ export const HonorsCertificationsSection: React.FC = () => {
                         display: 'block',
                       }}
                       loading="lazy"
+                      decoding="async"
                     />
                   </div>
                 )}
@@ -286,6 +287,7 @@ export const HonorsCertificationsSection: React.FC = () => {
             <img
               src={selectedCert.imageUrl}
               alt={selectedCert.title}
+              decoding="async"
               style={{
                 maxWidth: '100%',
                 maxHeight: 'calc(80vh - 60px)',

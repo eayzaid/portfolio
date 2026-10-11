@@ -119,6 +119,8 @@ export const TrueLinuxLogo: React.FC<TrueLogoProps> = ({ size = 20, className = 
   <img
     src={`${import.meta.env.BASE_URL}tux.svg`}
     alt="Linux Tux"
+    loading="lazy"
+    decoding="async"
     width={size}
     height={size}
     className={className}

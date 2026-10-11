@@ -5,4 +5,19 @@ import { defineConfig } from 'vite'
 export default defineConfig({
   base: '/portfolio/',
   plugins: [react()],
+  build: {
+    cssCodeSplit: true,
+    rollupOptions: {
+      output: {
+        manualChunks(id: string) {
+          if (id.includes('node_modules/react') || id.includes('node_modules/scheduler')) {
+            return 'vendor-react';
+          }
+          if (id.includes('node_modules/react-router')) {
+            return 'vendor-router';
+          }
+        },
+      },
+    },
+  },
 })

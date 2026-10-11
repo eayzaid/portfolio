@@ -228,6 +228,8 @@ export const HeroSection: React.FC = () => {
                 <img
                   src={`${import.meta.env.BASE_URL}art/my_profile_8bit_picture.jpeg`}
                   alt="8-bit Profile Portrait of Zaidane Ayman"
+                  fetchPriority="high"
+                  decoding="async"
                   style={{
                     width: '100%',
                     height: '100%',
@@ -252,6 +254,8 @@ export const HeroSection: React.FC = () => {
                 <img
                   src={`${import.meta.env.BASE_URL}art/my_profile_picture.jpeg`}
                   alt="Real Portrait Photo of Zaidane Ayman"
+                  loading="lazy"
+                  decoding="async"
                   style={{
                     width: '100%',
                     height: '100%',

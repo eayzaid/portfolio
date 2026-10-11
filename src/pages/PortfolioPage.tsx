@@ -1,12 +1,45 @@
-import { useState } from 'react';
+import { useState, lazy, Suspense } from 'react';
 import { RetroRadio, type RadioStationId } from '../components/RetroRadio';
 import { HeroSection } from '../components/HeroSection';
-import { ExperienceSection } from '../components/ExperienceSection';
-import { EducationSection } from '../components/EducationSection';
-import { ProjectsSection } from '../components/ProjectsSection';
-import { SkillsSection } from '../components/SkillsSection';
-import { HonorsCertificationsSection } from '../components/HonorsCertificationsSection';
 import { PixelIcon } from '../components/PixelIcon';
+
+const ExperienceSection = lazy(() => import('../components/ExperienceSection').then((m) => ({ default: m.ExperienceSection })));
+const EducationSection = lazy(() => import('../components/EducationSection').then((m) => ({ default: m.EducationSection })));
+const ProjectsSection = lazy(() => import('../components/ProjectsSection').then((m) => ({ default: m.ProjectsSection })));
+const SkillsSection = lazy(() => import('../components/SkillsSection').then((m) => ({ default: m.SkillsSection })));
+const HonorsCertificationsSection = lazy(() => import('../components/HonorsCertificationsSection').then((m) => ({ default: m.HonorsCertificationsSection })));
+
+function StationFallback() {
+  return (
+    <div
+      style={{
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
+        padding: '60px 20px',
+        textAlign: 'center',
+        fontFamily: 'var(--fp-font-mono, "JetBrains Mono", monospace)',
+      }}
+    >
+      <div
+        style={{
+          fontSize: '13px',
+          color: 'var(--fp-accent)',
+          letterSpacing: '0.12em',
+          textTransform: 'uppercase',
+          fontWeight: 600,
+          marginBottom: '8px',
+        }}
+      >
+        TUNING STATION FREQUENCY...
+      </div>
+      <div style={{ fontSize: '11px', color: 'var(--fp-muted)' }}>
+        [ ░▒▓▒░▒▓▒░ ]
+      </div>
+    </div>
+  );
+}
 
 type SectionTab = RadioStationId;
 
@@ -44,12 +77,14 @@ export function PortfolioPage() {
                 backgroundColor: 'var(--fp-surface)',
               }}
             >
-              {/* Station Views */}
-              {activeTab === 'experience' && <ExperienceSection />}
-              {activeTab === 'education' && <EducationSection />}
-              {activeTab === 'projects' && <ProjectsSection />}
-              {activeTab === 'skills' && <SkillsSection />}
-              {activeTab === 'honors' && <HonorsCertificationsSection />}
+              {/* Station Views (Lazy Loaded on Demand) */}
+              <Suspense fallback={<StationFallback />}>
+                {activeTab === 'experience' && <ExperienceSection />}
+                {activeTab === 'education' && <EducationSection />}
+                {activeTab === 'projects' && <ProjectsSection />}
+                {activeTab === 'skills' && <SkillsSection />}
+                {activeTab === 'honors' && <HonorsCertificationsSection />}
+              </Suspense>
             </section>
           )}
         </div>
