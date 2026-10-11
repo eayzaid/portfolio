@@ -319,10 +319,10 @@ img {
 
 @media (max-width: 600px) {
   .fp-radio-main-grid {
-    grid-template-columns: auto 1fr !important;
-    gap: 10px !important;
+    grid-template-columns: auto 1fr auto !important;
+    gap: 8px !important;
   }
-  .fp-radio-vol-col {
+  .fp-wheel-btn--flank {
     display: none !important;
   }
   .fp-radio-buttons-grid {

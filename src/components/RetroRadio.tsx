@@ -184,6 +184,122 @@ export const RetroRadio: React.FC<RetroRadioProps> = ({
     }
   };
 
+  // Right Volume Wheel References & Drag State
+  const volWheelRef = useRef<HTMLDivElement | null>(null);
+  const [isDraggingVol, setIsDraggingVol] = useState(false);
+  const volumeRef = useRef(volume);
+  const lastRadRef = useRef<number>(volume * 2 * Math.PI);
+  const dragMovedRef = useRef<boolean>(false);
+
+  useEffect(() => {
+    volumeRef.current = volume;
+  }, [volume]);
+
+  // Map volume (0 to 1) directly to radians (0 to 2π) and degrees (0 to 360°)
+  // 0% = 0 rad (0°), 100% = 2π rad (360°)
+  const volAngleDeg = volume * 360;
+
+  const getRadFromPointer = (clientX: number, clientY: number) => {
+    if (!volWheelRef.current) return null;
+    const rect = volWheelRef.current.getBoundingClientRect();
+    const cx = rect.left + rect.width / 2;
+    const cy = rect.top + rect.height / 2;
+    const dx = clientX - cx;
+    const dy = clientY - cy;
+    const dist = Math.hypot(dx, dy);
+
+    // Clockwise angle from 12 o'clock:
+    // 12 o'clock = 0 rad, 3 o'clock = π/2 rad, 6 o'clock = π rad, 9 o'clock = 3π/2 rad, 12 o'clock = 2π rad
+    let rad = Math.atan2(dx, -dy);
+    if (rad < 0) {
+      rad += 2 * Math.PI;
+    }
+    return { rad, dist };
+  };
+
+  const handleVolPointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
+    if (e.button !== 0) return;
+    const info = getRadFromPointer(e.clientX, e.clientY);
+    if (!info) return;
+
+    // Center cap is 32px diameter (16px radius) - clicking it toggles mute
+    if (info.dist < 16) {
+      toggleMute();
+      return;
+    }
+
+    try {
+      e.currentTarget.setPointerCapture(e.pointerId);
+    } catch {
+      // Ignore fallback
+    }
+    setIsDraggingVol(true);
+    dragMovedRef.current = false;
+    lastRadRef.current = info.rad;
+  };
+
+  const handleVolPointerMove = (e: React.PointerEvent<HTMLDivElement>) => {
+    if (!isDraggingVol) return;
+    const info = getRadFromPointer(e.clientX, e.clientY);
+    if (!info) return;
+
+    dragMovedRef.current = true;
+    let diff = info.rad - lastRadRef.current;
+
+    // Normalize diff to [-π, π] to gracefully handle crossing the 12 o'clock seam
+    if (diff > Math.PI) diff -= 2 * Math.PI;
+    if (diff < -Math.PI) diff += 2 * Math.PI;
+
+    // Delta volume = diff / (2 * π)
+    const deltaVol = diff / (2 * Math.PI);
+    const nextVol = Math.min(1, Math.max(0, volumeRef.current + deltaVol));
+
+    volumeRef.current = nextVol;
+    setVolume(Number(nextVol.toFixed(2)));
+    lastRadRef.current = info.rad;
+  };
+
+  const handleVolPointerUp = (e: React.PointerEvent<HTMLDivElement>) => {
+    if (!isDraggingVol) return;
+    try {
+      e.currentTarget.releasePointerCapture(e.pointerId);
+    } catch {
+      // ignore
+    }
+    setIsDraggingVol(false);
+
+    // If user clicked without dragging (single click on wheel rim):
+    if (!dragMovedRef.current) {
+      const info = getRadFromPointer(e.clientX, e.clientY);
+      if (info && info.dist >= 16) {
+        // Direct click sets volume to rad / (2 * π)
+        let clickedVol = info.rad / (2 * Math.PI);
+        if (clickedVol < 0.03) clickedVol = 0;
+        else if (clickedVol > 0.97) clickedVol = 1;
+        setVolume(Number(clickedVol.toFixed(2)));
+      }
+    }
+  };
+
+  const handleVolKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
+    if (e.key === 'ArrowRight' || e.key === 'ArrowUp') {
+      e.preventDefault();
+      setVolume(Math.min(1, Number((volume + 0.05).toFixed(2))));
+    } else if (e.key === 'ArrowLeft' || e.key === 'ArrowDown') {
+      e.preventDefault();
+      setVolume(Math.max(0, Number((volume - 0.05).toFixed(2))));
+    } else if (e.key === 'Home') {
+      e.preventDefault();
+      setVolume(0);
+    } else if (e.key === 'End') {
+      e.preventDefault();
+      setVolume(1);
+    } else if (e.key === 'm' || e.key === 'M' || e.key === ' ') {
+      e.preventDefault();
+      toggleMute();
+    }
+  };
+
   const handleProgressBarClick = (e: React.MouseEvent<HTMLDivElement>) => {
     const rect = e.currentTarget.getBoundingClientRect();
     const clickX = e.clientX - rect.left;
@@ -311,7 +427,7 @@ export const RetroRadio: React.FC<RetroRadioProps> = ({
             <button
               type="button"
               onClick={handlePrevStation}
-              className="fp-btn fp-btn--icon"
+              className="fp-btn fp-btn--icon fp-wheel-btn--flank"
               style={{
                 width: '28px',
                 height: '28px',
@@ -403,7 +519,7 @@ export const RetroRadio: React.FC<RetroRadioProps> = ({
             <button
               type="button"
               onClick={handleNextStation}
-              className="fp-btn fp-btn--icon"
+              className="fp-btn fp-btn--icon fp-wheel-btn--flank"
               style={{
                 width: '28px',
                 height: '28px',
@@ -848,7 +964,7 @@ export const RetroRadio: React.FC<RetroRadioProps> = ({
           </div>
         </div>
 
-        {/* === RIGHT CONTROL KNOB (Master Volume & Mute) === */}
+        {/* === RIGHT ROTARY WHEEL (Master Volume: 0 to 2π) === */}
         <div
           style={{
             display: 'flex',
@@ -869,92 +985,201 @@ export const RetroRadio: React.FC<RetroRadioProps> = ({
               textTransform: 'uppercase',
             }}
           >
-            MASTER VOL
+            VOL WHEEL
           </div>
 
-          {/* Rotary Volume / Mute Knob */}
-          <button
-            type="button"
-            onClick={toggleMute}
-            onWheel={handleVolumeWheel}
-            title={
-              isMuted
-                ? 'Master Muted: Click to Unmute, scroll to adjust volume'
-                : `Volume: ${Math.round(volume * 100)}% (Click to Mute, scroll to adjust)`
-            }
-            aria-pressed={!isMuted}
-            style={{
-              width: '46px',
-              height: '46px',
-              borderRadius: '50%',
-              background: !isMuted
-                ? 'var(--fp-primary)'
-                : 'linear-gradient(135deg, var(--fp-surface-2) 0%, var(--fp-surface) 100%)',
-              color: !isMuted ? 'var(--fp-on-primary)' : 'var(--fp-text)',
-              border: '2px solid var(--fp-border)',
-              boxShadow: '2px 2px 0 var(--fp-shadow)',
-              display: 'grid',
-              placeItems: 'center',
-              cursor: 'pointer',
-              fontSize: '10px',
-              fontWeight: 700,
-              fontFamily: 'JetBrains Mono, monospace',
-            }}
-          >
-            {isMuted ? 'MUTE' : `${Math.round(volume * 100)}%`}
-          </button>
-
-          {/* Volume Stepper micro buttons [-] [+] */}
-          <div style={{ display: 'flex', gap: '2px' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+            {/* Step down button */}
             <button
               type="button"
-              onClick={() => setVolume(Math.max(0, Number((volume - 0.1).toFixed(2))))}
-              title="Lower Volume"
-              aria-label="Lower Volume"
+              onClick={() => setVolume(Math.max(0, Number((volume - 0.05).toFixed(2))))}
+              className="fp-btn fp-btn--icon fp-wheel-btn--flank"
               style={{
-                width: '18px',
-                height: '16px',
-                fontSize: '9px',
+                width: '28px',
+                height: '28px',
                 padding: 0,
-                background: 'var(--fp-surface)',
-                border: '1px solid var(--fp-border)',
-                color: 'var(--fp-text)',
-                cursor: 'pointer',
+                fontSize: '12px',
+                fontWeight: 800,
                 fontFamily: 'JetBrains Mono, monospace',
-                fontWeight: 700,
               }}
+              title="Decrease Volume (-5%)"
+              aria-label="Decrease Volume"
             >
               -
             </button>
+
+            {/* Rotatable Physical Volume Wheel Knob (64px) */}
+            <div
+              ref={volWheelRef}
+              onPointerDown={handleVolPointerDown}
+              onPointerMove={handleVolPointerMove}
+              onPointerUp={handleVolPointerUp}
+              onPointerCancel={handleVolPointerUp}
+              onWheel={handleVolumeWheel}
+              role="slider"
+              tabIndex={0}
+              aria-label={`Rotary Volume Wheel. Current volume: ${Math.round(volume * 100)}%. Drag around to rotate, scroll, or use arrows.`}
+              aria-valuemin={0}
+              aria-valuemax={100}
+              aria-valuenow={Math.round(volume * 100)}
+              onKeyDown={handleVolKeyDown}
+              title={`Rotary Volume: ${Math.round(volume * 100)}% (${(volume * 2).toFixed(2)}π rad). Drag around wheel to adjust (0 to 2π), scroll wheel, or click center to mute.`}
+              style={{
+                width: '64px',
+                height: '64px',
+                borderRadius: '50%',
+                background: 'linear-gradient(135deg, var(--fp-surface-2) 0%, var(--fp-surface) 50%, var(--fp-surface-2) 100%)',
+                border: '3px solid var(--fp-border)',
+                boxShadow: isDraggingVol
+                  ? '1px 1px 0 var(--fp-shadow), inset 0 0 0 2px rgba(255,255,255,0.25)'
+                  : '3px 3px 0 var(--fp-shadow), inset 0 0 0 2px rgba(255,255,255,0.15)',
+                display: 'grid',
+                placeItems: 'center',
+                cursor: isDraggingVol ? 'grabbing' : 'grab',
+                position: 'relative',
+                touchAction: 'none',
+              }}
+            >
+              {/* Circular Gauge Track (0 to 2π) */}
+              <svg
+                style={{
+                  position: 'absolute',
+                  inset: 0,
+                  width: '100%',
+                  height: '100%',
+                  pointerEvents: 'none',
+                }}
+                viewBox="0 0 64 64"
+              >
+                {/* Background Track Circle */}
+                <circle
+                  cx="32"
+                  cy="32"
+                  r="26"
+                  fill="none"
+                  stroke="var(--fp-border)"
+                  strokeWidth="2"
+                  strokeDasharray="2 3"
+                  opacity="0.35"
+                />
+                {/* Active Volume Arc: 0 to 2π (0 rad = 0%, 2π rad = 100%) */}
+                <circle
+                  cx="32"
+                  cy="32"
+                  r="26"
+                  fill="none"
+                  stroke={!isMuted ? 'var(--fp-primary)' : 'var(--fp-muted)'}
+                  strokeWidth="3"
+                  strokeDasharray={163.36}
+                  strokeDashoffset={163.36 * (1 - volume)}
+                  strokeLinecap="round"
+                  transform="rotate(-90 32 32)"
+                  style={{
+                    transition: isDraggingVol ? 'none' : 'stroke-dashoffset 0.15s cubic-bezier(0.25, 1, 0.5, 1)',
+                  }}
+                />
+              </svg>
+
+              {/* Rotating Wheel Rotor Body */}
+              <div
+                style={{
+                  position: 'absolute',
+                  inset: 0,
+                  borderRadius: '50%',
+                  transform: `rotate(${volAngleDeg}deg)`,
+                  transition: isDraggingVol ? 'none' : 'transform 0.15s cubic-bezier(0.25, 1, 0.5, 1)',
+                  pointerEvents: 'none',
+                }}
+              >
+                {/* Dashed inner circle */}
+                <div
+                  style={{
+                    position: 'absolute',
+                    inset: '3px',
+                    borderRadius: '50%',
+                    border: '1px dashed var(--fp-border)',
+                    opacity: 0.5,
+                  }}
+                />
+
+                {/* Raised Tuning / Volume Needle Marker */}
+                <div
+                  style={{
+                    position: 'absolute',
+                    top: '2px',
+                    left: 'calc(50% - 2px)',
+                    width: '4px',
+                    height: '9px',
+                    background: !isMuted ? 'var(--fp-primary)' : 'var(--fp-muted)',
+                    border: '1px solid var(--fp-border)',
+                    boxShadow: !isMuted ? '0 0 4px var(--fp-primary)' : 'none',
+                  }}
+                />
+              </div>
+
+              {/* Static Upright Center Cap Button */}
+              <button
+                type="button"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  toggleMute();
+                }}
+                title={isMuted ? 'Muted: Click to Unmute' : `Volume: ${Math.round(volume * 100)}% (Click to Mute)`}
+                aria-label={isMuted ? 'Unmute Volume' : 'Mute Volume'}
+                style={{
+                  position: 'absolute',
+                  width: '32px',
+                  height: '32px',
+                  borderRadius: '50%',
+                  background: !isMuted ? 'var(--fp-surface)' : 'var(--fp-surface-2)',
+                  border: '2px solid var(--fp-border)',
+                  boxShadow: 'inset 1px 1px 2px rgba(0,0,0,0.2)',
+                  display: 'grid',
+                  placeItems: 'center',
+                  fontSize: '9px',
+                  fontWeight: 800,
+                  fontFamily: 'JetBrains Mono, monospace',
+                  color: !isMuted ? 'var(--fp-primary)' : 'var(--fp-muted)',
+                  cursor: 'pointer',
+                  zIndex: 3,
+                  padding: 0,
+                  userSelect: 'none',
+                }}
+              >
+                {isMuted ? 'MUTE' : `${Math.round(volume * 100)}%`}
+              </button>
+            </div>
+
+            {/* Step up button */}
             <button
               type="button"
-              onClick={() => setVolume(Math.min(1, Number((volume + 0.1).toFixed(2))))}
-              title="Increase Volume"
-              aria-label="Increase Volume"
+              onClick={() => setVolume(Math.min(1, Number((volume + 0.05).toFixed(2))))}
+              className="fp-btn fp-btn--icon fp-wheel-btn--flank"
               style={{
-                width: '18px',
-                height: '16px',
-                fontSize: '9px',
+                width: '28px',
+                height: '28px',
                 padding: 0,
-                background: 'var(--fp-surface)',
-                border: '1px solid var(--fp-border)',
-                color: 'var(--fp-text)',
-                cursor: 'pointer',
+                fontSize: '12px',
+                fontWeight: 800,
                 fontFamily: 'JetBrains Mono, monospace',
-                fontWeight: 700,
               }}
+              title="Increase Volume (+5%)"
+              aria-label="Increase Volume"
             >
               +
             </button>
           </div>
 
-          <span
-            className={`fp-led ${!isMuted && isPlaying ? 'fp-led--pulsing' : ''}`}
+          <div
             style={{
-              background: !isMuted ? 'var(--fp-primary)' : 'var(--fp-muted)',
-              opacity: !isMuted ? 1 : 0.4,
+              fontSize: '8px',
+              color: 'var(--fp-muted)',
+              fontFamily: 'JetBrains Mono, monospace',
+              letterSpacing: '.05em',
             }}
-          />
+          >
+            0 — 2π // ROTATE
+          </div>
         </div>
       </div>
 
