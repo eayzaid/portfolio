@@ -25,8 +25,7 @@ export const Footer: React.FC = () => {
         }}
       >
         <div>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontWeight: 700, fontSize: '18px' }}>
-            <PixelIcon name="tree" size={18} />
+          <div style={{ fontWeight: 700, fontSize: '18px' }}>
             <span>{resumeData.personal.name}</span>
           </div>
           <div className="fp-mono" style={{ fontSize: '12px', color: 'var(--fp-muted)', marginTop: '4px' }}>
